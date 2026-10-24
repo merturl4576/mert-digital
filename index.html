@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mert Ural</title>
+<meta name="description" content="Mert Ural builds software that talks, tidies, books and breaks in: Mainway, brisk, Booksy TR and a red team agent.">
+<link rel="icon" type="image/svg+xml" href="/files/icon-mainway.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,401,501&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Space+Grotesk:wght@500;600&family=Bricolage+Grotesque:opsz,wght@12..96,700..800&family=Figtree:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<style>
+/* Design read: a developer portfolio for recruiters, framed as one live recording.
+   Two inks only, each the other's text colour: night (warm black) and paper (warm cream).
+   Sections switch with a hard edge, never a fade. Colour only lives in the four project tracks.
+   One sans family, radius scale: 0 for type blocks, 14px for media, pill for buttons. */
+:root {
+  --font: "General Sans", system-ui, sans-serif;
+  --night: #0c0c0d; --paper: #ebe7de;
+  --bg: var(--night);
+  --fg: var(--paper); --fg-body: #d2cec5; --fg-2: #a6a198; --fg-3: #75716a; --hair: rgba(235,231,222,.13);
+  --ring: rgba(235,231,222,.1); --drop: rgba(0,0,0,.95);
+  --talks: #9b7cff; --tidies: #2fc6dc; --books: #ff6a3d; --breaks: #ebc23a;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+}
+.night { --bg: var(--night); background-color: var(--night); color: var(--fg); }
+.paper { --bg: var(--paper); --fg: #151413; --fg-body: #2c2a26; --fg-2: #5e5a53; --fg-3: #8b867d; --hair: rgba(21,20,19,.14);
+         --ring: rgba(21,20,19,.1); --drop: rgba(44,34,22,.42); background-color: var(--paper); color: var(--fg); }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 16px/1.6 var(--font); -webkit-font-smoothing: antialiased; }
+body::after { content: ""; position: fixed; inset: 0; z-index: 30; pointer-events: none; opacity: .65;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+.wrap { width: min(1168px, 100% - 2 * clamp(18px, 4vw, 48px)); margin-inline: auto; }
+.ph { font-size: 1.15em; vertical-align: -.16em; }
+
+/* ---------------- the tape: fixed recording strip, doubles as navigation ---------------- */
+.bar { position: fixed; inset: 0 0 auto 0; z-index: 20; height: 60px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 28px;
+       padding-inline: clamp(18px, 4vw, 64px); background: color-mix(in srgb, var(--night) 92%, transparent); backdrop-filter: blur(14px) saturate(140%);
+       border-bottom: 1px solid var(--hair); }
+.wordmark { font-weight: 600; font-size: 17px; letter-spacing: -.01em; text-decoration: none; }
+#tape { width: 100%; height: 30px; display: block; cursor: pointer; }
+.rec { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--fg-2); min-width: 128px; justify-content: flex-end; }
+.rec i { width: 9px; height: 9px; border-radius: 50%; background: #ff4b4b; box-shadow: 0 0 0 4px rgba(255,75,75,.16); transition: background .4s, box-shadow .4s; }
+.rec.stopped i { background: var(--fg-3); box-shadow: none; }
+@media (max-width: 760px) { #tape { visibility: hidden; } }
+
+/* ---------------- buttons ---------------- */
+.btn { display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 19px; border-radius: 999px; font: 500 14.5px var(--font); text-decoration: none;
+       border: 1px solid var(--hair); background: transparent; color: var(--fg); cursor: pointer; white-space: nowrap; transition: transform .2s var(--ease), background .3s, border-color .3s; }
+.btn:hover { border-color: var(--fg-2); }
+.btn:active { transform: translateY(1px) scale(.99); }
+.btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.btn.primary:hover { background: transparent; color: var(--fg); }
+.textlink { color: var(--fg-2); text-decoration: none; border-bottom: 1px solid var(--hair); padding-bottom: 2px; transition: color .2s, border-color .2s; }
+.textlink:hover { color: var(--fg); border-color: var(--fg); }
+
+/* ---------------- hero ---------------- */
+.hero { min-height: 100dvh; display: grid; align-items: center; padding: 96px 0 48px; }
+.hero-grid { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
+@media (min-width: 1040px) { .hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(48px, 6vw, 110px); } }
+.eyebrow { margin: 0 0 18px; font-size: 14px; font-weight: 500; color: var(--fg-2); }
+h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-height: .92; letter-spacing: -.045em; }
+.lede { margin: 24px 0 0; font-weight: 400; font-size: clamp(20px, 1.45vw, 25px); line-height: 1.32; letter-spacing: -.012em; max-width: 26ch; }
+.sub { margin: 14px 0 0; font-size: 16px; color: var(--fg-2); max-width: 44ch; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.elsewhere { display: flex; gap: 22px; margin-top: 20px; font-size: 14px; }
+
+.viewfinder { position: relative; margin: 0; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; background: #1b1c1e; justify-self: end; width: min(100%, 400px); }
+.viewfinder img { width: 100%; height: 100%; object-fit: cover; object-position: 46% 26%; display: block; }
+.viewfinder .corner { position: absolute; width: 26px; height: 26px; border: 2px solid rgba(255,255,255,.85); }
+.viewfinder .tl { top: 18px; left: 18px; border-right: 0; border-bottom: 0; } .viewfinder .tr { top: 18px; right: 18px; border-left: 0; border-bottom: 0; }
+.viewfinder .bl { bottom: 18px; left: 18px; border-right: 0; border-top: 0; } .viewfinder .br { bottom: 18px; right: 18px; border-left: 0; border-top: 0; }
+.viewfinder figcaption { position: absolute; top: 24px; left: 54px; right: 54px; display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; color: #fff; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+.viewfinder figcaption b { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; }
+.viewfinder figcaption b::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #ff4b4b; animation: blink 1.4s steps(2, start) infinite; }
+@keyframes blink { 50% { opacity: .2; } }
+
+/* ---------------- the sentence ---------------- */
+.sentence { padding: clamp(48px, 6vw, 96px) 0 clamp(56px, 7vw, 110px); }
+.said { margin: 0; font-weight: 500; font-size: clamp(30px, 3.3vw, 56px); line-height: 1.06; letter-spacing: -.035em; color: var(--fg-3); max-width: 18ch; }
+.said .w { color: var(--fg); transition: color .35s; cursor: pointer; }
+.said .w.on { color: var(--c); }
+#wave { display: block; width: 100%; height: clamp(100px, 9vw, 160px); margin: clamp(24px, 3vw, 44px) 0 clamp(28px, 3.5vw, 48px); }
+.tracks { list-style: none; margin: 0; padding: 0; }
+.trk { display: grid; grid-template-columns: 30px minmax(200px, 1.1fr) minmax(0, 2fr) minmax(170px, auto); align-items: center; gap: 22px; padding: 13px 0; text-decoration: none; border-top: 1px solid var(--hair); }
+.tracks li:last-child .trk { border-bottom: 1px solid var(--hair); }
+.trk .n { font-size: 14px; color: var(--fg-3); font-variant-numeric: tabular-nums; }
+.trk .nm { display: flex; align-items: center; gap: 14px; font-weight: 600; font-size: clamp(19px, 1.5vw, 24px); letter-spacing: -.02em; }
+.trk .nm img { width: 40px; height: 40px; border-radius: 10px; box-shadow: 0 8px 18px -10px rgba(0,0,0,.8); }
+.trk canvas { width: 100%; height: 34px; display: block; }
+.trk .st { font-size: 14px; color: var(--fg-2); text-align: right; display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+.trk .st .ph { transition: transform .3s var(--ease); }
+.trk:hover .st .ph, .trk:focus-visible .st .ph { transform: translate(3px, -3px); }
+@media (max-width: 860px) { .trk { grid-template-columns: 28px 1fr; } .trk canvas, .trk .st { grid-column: 2; text-align: left; justify-content: flex-start; } }
+
+/* ---------------- project scenes: one strict grid ----------------
+   Title, one standfirst, then the story: reading text in two narrow columns with the pull quote beside it,
+   then the media, sized so screenshots are shown at or below their real pixels. */
+.project { padding: clamp(64px, 6.5vw, 108px) 0; scroll-margin-top: 60px; }
+.paper + .paper > .wrap, .night.project + .night.project > .wrap { border-top: 1px solid var(--hair); padding-top: clamp(48px, 4.5vw, 72px); }
+.paper + .paper, .night.project + .night.project { padding-top: 0; }
+.trackline { display: flex; align-items: center; gap: 14px; font-size: 14px; color: var(--fg-2); margin: 0 0 22px; }
+.trackline canvas { width: 72px; height: 20px; }
+.trackline b { color: var(--fg); font-weight: 600; }
+.title { display: flex; align-items: center; gap: 18px; margin: 0; font-weight: 600; font-size: clamp(40px, 3.6vw, 66px); line-height: .95; letter-spacing: -.04em; }
+.title img { width: clamp(44px, 3.2vw, 58px); height: clamp(44px, 3.2vw, 58px); border-radius: 24%; box-shadow: 0 12px 26px -14px var(--drop); }
+.stand { margin: 26px 0 0; font-weight: 400; font-size: clamp(20px, 1.4vw, 25px); line-height: 1.36; letter-spacing: -.012em; max-width: 620px; color: var(--fg); }
+.story { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; margin-top: clamp(32px, 3vw, 46px); align-items: center; }
+@media (min-width: 1000px) { .story { grid-template-columns: minmax(0, 2fr) minmax(0, 1.12fr); gap: 64px; } }
+.cols { columns: 2 280px; column-gap: 40px; font-size: 17px; line-height: 1.64; color: var(--fg-body); }
+.cols p { margin: 0 0 1em; }
+.pull { margin: 0; padding-left: 26px; border-left: 2px solid var(--c, var(--fg-3)); font-weight: 400; font-style: italic; font-size: clamp(25px, 2vw, 36px); line-height: 1.2; letter-spacing: -.02em; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 18px 0 0; padding: 0; list-style: none; }
+.tags li { font-size: 13.5px; font-weight: 500; color: var(--fg-3); }
+.cap { margin: 12px 0 0; font-size: 13px; color: var(--fg-3); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 22px; }
+.media { margin-top: clamp(44px, 4vw, 64px); }
+.shot { margin: 0; }
+.shot img { display: block; width: 100%; height: auto; border-radius: 10px; box-shadow: 0 0 0 1px var(--ring), 0 30px 60px -30px var(--drop); }
+.shot figcaption { margin-top: 12px; font-size: 13px; color: var(--fg-3); }
+
+/* Mainway scene */
+.call { margin-top: clamp(36px, 4vw, 56px); border-radius: 14px; overflow: hidden; background: #0e0d12; box-shadow: 0 0 0 1px rgba(155,124,255,.22), 0 50px 90px -50px var(--drop);
+        display: grid; grid-template-columns: 1fr; font-family: "Space Grotesk", sans-serif; color: #ece9f2; }
+@media (min-width: 960px) { .call { grid-template-columns: 340px 1fr; } }
+.call .script { padding: 26px 28px; border-right: 1px solid #221f2b; }
+
+/* the call's own camera bar: REC while it plays, a record button to replay it */
+.callbar { grid-column: 1 / -1; position: relative; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 14px 16px 14px 28px; border-bottom: 1px solid #221f2b; }
+.callbar::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: #ff4b4b; transform-origin: left; transform: scaleX(var(--p, 0)); opacity: .8; }
+.call.done .callbar::after { opacity: 0; transition: opacity .8s; }
+.callbar h4 { margin: 0 auto 0 0; font: 500 15px "Space Grotesk"; }
+.ctime { display: inline-flex; align-items: center; gap: 8px; font: 500 14px "Space Grotesk"; color: #8b879a; font-variant-numeric: tabular-nums; }
+.ctime .speed { font-size: 12px; font-weight: 600; color: #a9a4b8; padding: 2px 7px; border-radius: 999px; border: 1px solid #2c2838; }
+.ctime b { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 12px; letter-spacing: .04em; color: #ff6b6b; opacity: 0; transition: opacity .3s; }
+.ctime b::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #ff4b4b; animation: blink 1.4s steps(2, start) infinite; }
+.call.playing .ctime b { opacity: 1; }
+.recbtn { display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 18px 0 6px; border-radius: 999px; border: 1px solid #2c2838; background: #14111c;
+          color: #ece9f2; font: 500 14.5px "Space Grotesk"; cursor: pointer; white-space: nowrap; transition: border-color .3s, background .3s, transform .2s var(--ease); }
+.recbtn:hover { border-color: #4a4458; background: #1a1624; }
+.recbtn:active { transform: scale(.97); }
+.recbtn:focus-visible { outline: 2px solid #ece9f2; outline-offset: 3px; }
+.lens { position: relative; width: 34px; height: 34px; display: grid; place-items: center; }
+.lens svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+.lens circle { fill: none; stroke-width: 2; }
+.lens .ring { stroke: rgba(236,233,242,.82); transition: stroke .4s; }
+.lens .prog { stroke: #ff4b4b; stroke-linecap: round; stroke-dasharray: 94.25; stroke-dashoffset: calc(94.25 * (1 - var(--p, 0))); }
+.call.playing .lens .ring { stroke: rgba(236,233,242,.16); }
+.call.done .lens .prog { opacity: 0; transition: opacity .4s; }
+.lens i { width: 18px; height: 18px; border-radius: 50%; background: #ff4b4b; transition: width .35s var(--ease), height .35s var(--ease), border-radius .35s var(--ease), transform .3s var(--ease); }
+.call.playing .lens i { width: 11px; height: 11px; border-radius: 3px; }
+.call.done .recbtn:hover .lens i { transform: scale(1.12); }
+.call.done.nudge .lens { animation: nudge 1.1s var(--ease) 1; }
+@keyframes nudge { 0% { transform: scale(1); } 30% { transform: scale(1.14); } 60% { transform: scale(.97); } 100% { transform: scale(1); } }
+.call.snap, .call.snap * { transition: none !important; }
+.turn { opacity: 0; transform: translateY(5px); transition: opacity .4s, transform .4s; margin-bottom: 16px; }
+.turn.on { opacity: 1; transform: none; }
+.turn .who { font: 600 12.5px "Space Grotesk"; margin-bottom: 3px; }
+.turn.agent .who { color: #c3adff; } .turn.caller .who { color: #f1c48b; }
+.turn .t { font: 400 15.5px/1.5 "Space Grotesk"; }
+.turn .lost { text-decoration: line-through; text-decoration-color: transparent; transition: color .3s; }
+.turn.cut .lost { color: #4a4756; text-decoration-color: #ff5ad8; }
+.call .ladder { padding: 22px 26px 12px 8px; }
+.call svg { width: 100%; max-width: 760px; margin-inline: auto; height: auto; display: block; }
+.call .lane { font: 500 13px "Space Grotesk"; fill: #ece9f2; } .call .tech { font: 400 11px "Space Grotesk"; fill: #8b879a; }
+.call .life { stroke: #2a2733; stroke-dasharray: 2 5; }
+.call .m { opacity: 0; transition: opacity .25s; } .call .m.on { opacity: 1; }
+.call .m line { stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: var(--len); stroke-dashoffset: var(--len); transition: stroke-dashoffset .45s var(--ease); }
+.call .m.on line { stroke-dashoffset: 0; }
+.call .m text { font: 600 12px "Space Grotesk"; stroke: none; }
+.call .tm { font: 500 11px "Space Grotesk"; fill: #4a4756; } .call .m.on .tm { fill: #8b879a; }
+.k-caller { stroke: #f1c48b; fill: #f1c48b; } .k-agent { stroke: #c3adff; fill: #c3adff; } .k-sys { stroke: #a9a4b8; fill: #a9a4b8; } .k-cut { stroke: #ff5ad8; fill: #ff5ad8; }
+.call .note { font: 400 11.5px "Space Grotesk"; fill: #8b879a; }
+.call .act { fill: rgba(155,124,255,.14); stroke: rgba(155,124,255,.45); }
+/* the way out to Mainway's own site: the same Product | Engineering switch its nav uses, product in the track's lavender,
+   engineering on drafting paper; each half opens that page */
+.mwlinks { display: inline-flex; height: 50px; padding: 3px; border-radius: 999px; border: 1px solid var(--hair); background: color-mix(in srgb, var(--fg) 4%, transparent); }
+.mwlinks a { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 0 17px 0 13px; border-radius: 999px; text-decoration: none;
+             font: 500 14.5px var(--font); color: var(--fg); white-space: nowrap; transition: background-color .3s, background-size .3s var(--ease); }
+.mwlinks a .ph-arrow-up-right { font-size: 1em; color: currentColor; opacity: .7; transition: transform .3s var(--ease), opacity .3s; }
+.mwlinks a:hover .ph-arrow-up-right { transform: translate(2px, -2px); opacity: 1; }
+.mwlinks .mw-p { background: var(--talks); color: #140c26; }
+.mwlinks .mw-p:hover { background: #ad93ff; }
+.mwlinks .mw-p img { width: 22px; height: 22px; border-radius: 6px; background: #140c26; padding: 2px; }
+.mwlinks .mw-e { background-image: linear-gradient(rgba(155,124,255,.2) 1px, transparent 1px), linear-gradient(90deg, rgba(155,124,255,.2) 1px, transparent 1px); background-size: 7px 7px; }
+.mwlinks .mw-e:hover { background-size: 6px 6px; }
+.mwlinks .led { display: grid; grid-template-columns: repeat(5, 3px); grid-template-rows: repeat(4, 3px); gap: 1.5px; }
+.mwlinks .led i { background: rgba(21,20,19,.16); border-radius: .5px; }
+.mwlinks .led i.on { background: var(--talks); animation: led 2.4s steps(1, end) infinite; animation-delay: var(--d, 0s); }
+@keyframes led { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .mwlinks .led i.on { animation: none; } }
+@media (max-width: 440px) { .mwlinks { display: flex; width: 100%; } .mwlinks a { flex: 1 1 0; padding: 0 10px; gap: 7px; font-size: 14px; } .mwlinks a .ph-arrow-up-right { display: none; } }
+.btn.talks { background: var(--talks); border-color: var(--talks); color: #140c26; }
+.btn.talks:hover { background: transparent; color: var(--fg); }
+
+/* brisk scene: the demo at its own size, two read-back screens stacked beside it */
+.term { display: flex; align-items: center; margin-top: 4px; border: 1px solid var(--hair); border-radius: 999px; overflow: hidden; height: 44px; max-width: 640px; }
+.term code { flex: 1; min-width: 0; padding: 0 18px; white-space: nowrap; overflow: hidden; font: 500 13.5px "Geist", ui-monospace, monospace; color: var(--fg-body); -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent); mask-image: linear-gradient(90deg, #000 82%, transparent); }
+.term button { height: 100%; padding: 0 18px; border: 0; border-left: 1px solid var(--hair); background: transparent; color: var(--fg); font: 500 14px var(--font); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.term button:hover { background: color-mix(in srgb, var(--fg) 8%, transparent); }
+.bento { display: grid; grid-template-columns: 1fr; gap: 22px; }
+@media (min-width: 900px) { .bento { grid-template-columns: minmax(0, 720fr) minmax(0, 426fr); align-items: start; } .bento .lead { grid-row: span 2; } }
+
+/* Booksy scene: an App Store row that fits the grid; it scrolls sideways only on narrow screens */
+.strip { display: grid; grid-auto-flow: column; grid-auto-columns: 220px; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; scrollbar-width: none; }
+@media (min-width: 1000px) { .strip { grid-auto-flow: row; grid-template-columns: repeat(5, minmax(0, 1fr)); overflow: visible; } }
+.strip::-webkit-scrollbar { display: none; }
+.panel { aspect-ratio: 598 / 1300; border-radius: 14px; overflow: hidden; scroll-snap-align: start; position: relative; padding: 22px 18px 0; display: flex; flex-direction: column; font-family: "Figtree", sans-serif; box-shadow: 0 0 0 1px var(--ring), 0 30px 50px -36px var(--drop); }
+.panel .brand { display: flex; align-items: center; gap: 7px; font: 700 12px "Figtree"; }
+.panel .brand img { width: 18px; height: 18px; border-radius: 5px; }
+.panel .lbl { font: 700 11px "Figtree"; margin-top: 4px; }
+.panel h5 { margin: 10px 0 0; font: 800 clamp(22px, 1.75vw, 28px)/.98 "Bricolage Grotesque", sans-serif; letter-spacing: -.035em; }
+.panel h5 em { font-style: normal; }
+.panel p { margin: 10px 0 0; font: 500 12px/1.4 "Figtree"; opacity: .82; }
+.phone { margin-top: auto; align-self: center; width: 82%; aspect-ratio: 9 / 15.5; border-radius: 22px 22px 0 0; background: #101113; padding: 6px 6px 0; }
+.phone .scr { width: 100%; height: 100%; border-radius: 17px 17px 0 0; overflow: hidden; background: #fff; color: #15171c; display: flex; flex-direction: column; font-family: "Figtree", sans-serif; }
+.scr .vid { height: 52%; background-size: cover; background-position: center 30%; position: relative; display: flex; flex-direction: column; justify-content: flex-end; padding: 9px; }
+.scr .vid::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.05) 40%, rgba(0,0,0,.65)); }
+.scr .vid b { position: relative; color: #fff; font: 800 13px/1.02 "Bricolage Grotesque"; letter-spacing: -.02em; }
+.scr .vid .s { position: relative; margin-top: 6px; background: #fff; border-radius: 8px; padding: 5px 7px; font-size: 8px; color: #8a909a; }
+.scr .pad { padding: 9px; }
+.scr .h { font: 700 9.5px "Figtree"; margin-bottom: 6px; }
+.scr .sl { display: flex; flex-wrap: wrap; gap: 3px; }
+.scr .sl span { font: 700 8px "Figtree"; padding: 3px 6px; border-radius: 99px; background: #e6f1ef; color: #0b5e5b; }
+.scr .sl span.x { background: #f3f4f6; color: #8a909a; text-decoration: line-through; font-weight: 500; }
+.scr .sl span.f { background: #ffede6; color: #ff6a3d; }
+.scr .card2 { border: 1px solid #eef0f2; border-radius: 10px; padding: 7px; margin-bottom: 6px; font-size: 8.5px; }
+.scr .card2 b { font-size: 9px; display: block; margin-bottom: 4px; }
+.scr .card2 i { color: #ff6a3d; font-style: normal; }
+.scr .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
+.scr .grid span { font: 600 8px "Figtree"; text-align: center; padding: 5px 0; border-radius: 6px; background: #f3f4f6; }
+.scr .grid span.sel { background: #0b5e5b; color: #fff; } .scr .grid span.x { color: #b9bdc4; text-decoration: line-through; }
+.scr .tick { margin: 16px auto 10px; width: 44px; height: 44px; border-radius: 50%; background: #e6f1ef; display: grid; place-items: center; }
+.scr .ticket { margin: 0 9px; border: 1px dashed #c9d9d6; border-radius: 10px; padding: 8px; font-size: 8.5px; }
+.scr .ticket b { display: block; font-size: 10px; margin-bottom: 2px; }
+.scr .days { display: flex; gap: 3px; padding: 7px 9px; }
+.scr .days span { flex: 1; text-align: center; font: 700 8px "Figtree"; padding: 4px 0; border-radius: 7px; background: #f3f4f6; }
+.scr .days span.on { background: #15171c; color: #fff; }
+.scr .cal { padding: 6px 9px; font-size: 8px; }
+.scr .cal .r { display: grid; grid-template-columns: 26px 1fr; gap: 4px; align-items: center; border-top: 1px solid #eef0f2; padding: 3px 0; color: #8a909a; }
+.scr .cal .r span { border-radius: 5px; padding: 3px 5px; background: #e6f1ef; color: #0b5e5b; font-weight: 700; }
+.scr .cal .r span.n { background: #ffede6; color: #ff6a3d; } .scr .cal .r span.e { background: transparent; }
+
+/* Red team scene: the rules, drawn */
+.flow { margin: clamp(44px, 4vw, 64px) 0 0; border-radius: 14px; padding: clamp(20px, 3vw, 36px); background: rgba(235,194,58,.05); box-shadow: inset 0 0 0 1px rgba(235,194,58,.18); }
+.flow svg { width: 100%; max-width: 760px; margin-inline: auto; height: auto; display: block; }
+.flow .box { fill: #17160f; stroke: rgba(236,235,232,.22); }
+.flow .gate { fill: rgba(235,194,58,.1); stroke: #ebc23a; }
+.flow text { font: 500 14px var(--font); fill: #ecebe8; }
+.flow .small { font: 400 12.5px var(--font); fill: #a3a3a6; }
+.flow .ok { stroke: #ecebe8; } .flow .no { stroke: #ff6b5e; stroke-dasharray: 4 5; }
+.flow .notext { fill: #ff8b80; font-size: 12.5px; }
+/* Red team findings: two paper slips taped onto the night scene. Paper is the site's second ink;
+   the heavier finding is the bigger slip and lies on top. Amber stays on the dot, the meter and the tape.
+   Slips tilt only where there's room for it, and straighten when you pick one up. */
+.finds { display: grid; grid-template-columns: minmax(0, 1fr); gap: 34px; margin-top: clamp(48px, 4.6vw, 72px); align-items: center; }
+@media (min-width: 1000px) { .finds { grid-template-columns: minmax(0, 1fr) minmax(0, 2.1fr); gap: 64px; align-items: start; } .finds .note { padding-top: 48px; } }
+.finds .note .k { margin: 0; font-size: 14px; font-weight: 600; color: var(--fg); }
+.finds .note p:last-child { margin: 8px 0 0; font-size: 17px; line-height: 1.6; color: var(--fg-body); max-width: 34ch; }
+.slips { display: flex; flex-direction: column; gap: 26px; max-width: 780px; padding-top: 14px; }
+.slip { --tilt: 0deg; position: relative; margin: 0; padding: 28px 28px 22px; border-radius: 4px; background: var(--paper); color: #151413;
+        box-shadow: 0 1px 2px rgba(0,0,0,.45), 0 30px 60px -28px rgba(0,0,0,.95);
+        transform: rotate(var(--tilt)); transition: transform .7s var(--ease), box-shadow .7s var(--ease); }
+.slip::before { content: ""; position: absolute; top: -13px; left: calc(50% - 48px); width: 96px; height: 26px; transform: rotate(-3deg);
+                background: linear-gradient(100deg, rgba(255,255,255,.12), rgba(255,255,255,0) 60%), rgba(226,192,96,.93);
+                clip-path: polygon(3% 0, 97% 0, 100% 22%, 96% 44%, 100% 66%, 96% 86%, 98% 100%, 2% 100%, 0 82%, 4% 62%, 0 40%, 4% 20%); }
+.slip.mid::before { left: auto; right: 22%; transform: rotate(4deg); }
+.slips.plain .slip::before { display: none; }
+@media (min-width: 760px) {
+  .slips { flex-direction: row; align-items: flex-start; gap: 0; }
+  .slip.hi { --tilt: -2.5deg; flex: 0 0 54%; z-index: 2; }
+  .slip.mid { --tilt: 2deg; flex: 0 0 47.5%; margin: 52px 0 0 -1.5%; z-index: 1; }
+}
+@media (hover: hover) and (min-width: 760px) {
+  .slip:hover { transform: rotate(0deg) translateY(-6px); z-index: 3; box-shadow: 0 1px 2px rgba(0,0,0,.45), 0 44px 70px -30px rgba(0,0,0,1); }
+}
+.slip .who { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 11.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: #5e5a53; }
+.slip .who::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #c8960e; box-shadow: 0 0 0 3px rgba(200,150,14,.2); }
+.slip .score { display: flex; align-items: flex-end; gap: 14px; margin: 20px 0 0; }
+.slip .score b { font-size: clamp(54px, 4.6vw, 70px); font-weight: 500; line-height: .78; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
+.slip .score span { font-size: 12.5px; font-weight: 500; line-height: 1.3; color: #5e5a53; }
+.slip .meter { position: relative; height: 12px; margin-top: 18px; background: repeating-linear-gradient(90deg, rgba(21,20,19,.13) 0 2px, transparent 2px 5px); }
+.slip .meter::before { content: ""; position: absolute; inset: 0 auto 0 0; width: calc(var(--s) * 10%); background: repeating-linear-gradient(90deg, #c8960e 0 2px, transparent 2px 5px); }
+.slip h3 { margin: 20px 0 0; font-size: 21px; font-weight: 600; line-height: 1.22; letter-spacing: -.02em; }
+.slip .ctx { margin: 6px 0 0; font-size: 14.5px; line-height: 1.5; color: #5e5a53; }
+.slip .ids { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 18px 0 0; padding-top: 12px; border-top: 1px dashed rgba(21,20,19,.2); font-size: 12.5px; font-weight: 500; color: #6b675f; }
+.slip.mid .score b { font-size: clamp(46px, 3.8vw, 58px); }
+.slip.mid h3 { font-size: 19px; }
+
+/* About: the interview */
+.about { padding: clamp(64px, 6.5vw, 108px) 0; }
+.about h2 { margin: 0; font-weight: 600; font-size: clamp(40px, 3.6vw, 66px); line-height: .92; letter-spacing: -.045em; }
+.qa { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: clamp(32px, 3.5vw, 52px); }
+.qa > div { display: grid; grid-template-columns: 1fr; gap: 8px 56px; padding: 22px 0; border-top: 1px solid var(--hair); }
+@media (min-width: 900px) { .qa > div { grid-template-columns: 300px 1fr; } }
+.qa .q { font-size: 15px; color: var(--fg-2); display: flex; gap: 14px; }
+.qa .q span { color: var(--fg-3); font-variant-numeric: tabular-nums; }
+.qa .a { font-weight: 400; font-size: clamp(18px, 1.3vw, 21px); line-height: 1.38; letter-spacing: -.012em; max-width: 46ch; }
+
+/* End of recording */
+.end { min-height: 100dvh; display: grid; align-content: center; padding: 100px 0 48px; }
+#flat { display: block; width: 100%; height: 96px; margin-bottom: clamp(32px, 3.5vw, 52px); }
+.end h2 { margin: 0; font-weight: 600; font-size: clamp(44px, 4.6vw, 84px); line-height: .92; letter-spacing: -.045em; }
+.end .say { margin: 22px 0 0; font-weight: 400; font-size: clamp(19px, 1.4vw, 24px); line-height: 1.25; letter-spacing: -.018em; color: var(--fg-2); max-width: 34ch; }
+.end .say b { color: var(--fg); font-weight: 500; }
+.mail { display: inline-block; margin-top: 30px; font-weight: 600; font-size: clamp(26px, 2.3vw, 40px); letter-spacing: -.035em; text-decoration: none; border-bottom: 2px solid var(--hair); padding-bottom: 6px; transition: border-color .3s; }
+.mail:hover { border-color: var(--fg); }
+.foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 24px; margin-top: clamp(56px, 6vw, 96px); padding-top: 20px; border-top: 1px solid var(--hair); font-size: 13px; color: var(--fg-3); }
+
+/* reveal: one rule for entering content */
+.rv { opacity: 0; transform: translateY(26px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.rv.in { opacity: 1; transform: none; }
+
+/* a rubber stamp for work whose code stays private; it lands once its block scrolls in */
+.stamp { --c: var(--breaks); display: inline-flex; align-items: center; gap: 12px; margin-top: 24px; padding: 10px 17px 9px 13px; color: var(--c);
+  border: 1.5px solid var(--c); outline: 1px solid var(--c); outline-offset: 3px; border-radius: 3px; transform: rotate(-2.5deg); transform-origin: 0 50%;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 2.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 2.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); -webkit-mask-size: 160px; mask-size: 160px; }
+.stamp i { font-size: 22px; }
+.stamp b { display: block; font: 600 14px/1.2 var(--font); letter-spacing: .16em; text-transform: uppercase; }
+.stamp small { display: block; margin-top: 3px; font: 500 11px/1.2 var(--font); letter-spacing: .14em; text-transform: uppercase; opacity: .78; }
+.rv .stamp { opacity: 0; transform: rotate(-2.5deg) scale(1.18); transition: transform .45s cubic-bezier(.2, 1.6, .4, 1) .55s, opacity .2s linear .55s; }
+.rv.in .stamp { opacity: .94; transform: rotate(-2.5deg); }
+
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .rv { opacity: 1; transform: none; }
+  .rv .stamp { opacity: .94; transform: rotate(-2.5deg); }
+  .turn, .call .m { opacity: 1; } .call .m line { stroke-dashoffset: 0; }
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="wordmark" href="#top">mert.digital</a>
+  <canvas id="tape" aria-label="Recording timeline. Click to jump to a section."></canvas>
+  <span class="rec" id="rec"><i></i><span id="tc">REC 00:00</span></span>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="scene night hero" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow rv">Full-stack developer, IT engineering student</p>
+        <h1 class="rv">Mert Ural</h1>
+        <p class="lede rv">I build software you can talk to, and tools that show their work.</p>
+        <p class="sub rv">Third year in Wrocław. Looking for an internship in summer 2027, or part-time now.</p>
+        <div class="ctas rv">
+          <a class="btn primary" href="/files/Mert-Ural-CV.pdf" download="Mert-Ural-CV.pdf"><i class="ph ph-download-simple"></i>Download CV</a>
+          <a class="btn" href="mailto:merturl67@gmail.com"><i class="ph ph-envelope-simple"></i>merturl67@gmail.com</a>
+        </div>
+        <div class="elsewhere rv"><a class="textlink" href="https://github.com/merturl4576" target="_blank" rel="noopener">GitHub</a><a class="textlink" href="https://www.linkedin.com/in/mert-ural-9abb7822b/" target="_blank" rel="noopener">LinkedIn</a><a class="textlink" href="#about">About me</a></div>
+      </div>
+      <figure class="viewfinder rv">
+        <img src="/files/me-real.jpg" alt="Mert Ural">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <figcaption><b>REC</b><span id="vf">00:00:00</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- THE SENTENCE -->
+  <section class="scene night sentence" id="sentence">
+    <div class="wrap"><p class="said rv" id="said">I build software that <span class="w" data-k="talks">talks</span>, <span class="w" data-k="tidies">tidies</span>, <span class="w" data-k="books">books</span> and <span class="w" data-k="breaks">breaks in</span>.</p></div>
+    <canvas id="wave" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <ol class="tracks" id="tracks">
+        <li><a class="trk" href="#mainway" data-k="talks"><span class="n">1</span><span class="nm"><img src="/files/icon-mainway.svg" alt="">Mainway</span><canvas data-mini="talks"></canvas><span class="st">Case study and engineering notes<i class="ph ph-arrow-up-right"></i></span></a></li>
+        <li><a class="trk" href="#brisk" data-k="tidies"><span class="n">2</span><span class="nm"><img src="/files/icon-brisk.svg" alt="">brisk</span><canvas data-mini="tidies"></canvas><span class="st">Free on GitHub<i class="ph ph-arrow-up-right"></i></span></a></li>
+        <li><a class="trk" href="#booksy" data-k="books"><span class="n">3</span><span class="nm"><img src="/files/icon-booksy.svg" alt="">Booksy TR</span><canvas data-mini="books"></canvas><span class="st">In development<i class="ph ph-arrow-up-right"></i></span></a></li>
+        <li><a class="trk" href="#redteam" data-k="breaks"><span class="n">4</span><span class="nm"><img src="/files/icon-redteam.svg" alt="">Red team agent</span><canvas data-mini="breaks"></canvas><span class="st">In development<i class="ph ph-arrow-up-right"></i></span></a></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- TRACK 1: MAINWAY -->
+  <section class="scene paper project" id="mainway" data-track="talks">
+    <div class="wrap">
+      <p class="trackline rv"><canvas data-mini="talks" data-small></canvas><b>Track 1</b>Tested on 150+ real calls</p>
+      <h2 class="title rv"><img src="/files/icon-mainway.svg" alt="">Mainway</h2>
+      <p class="stand rv">An AI receptionist for clinics in Turkey. It answers in Turkish, books the appointment, and stops talking the moment you cut in.</p>
+      <div class="call rv" id="call">
+        <div class="callbar">
+          <h4>A call to Mainway Dental</h4>
+          <span class="ctime"><b>REC</b><span id="callT">00:00</span><span class="speed" title="Played at 1.5 times the real speed">1.5×</span></span>
+          <button class="recbtn" id="callRec" type="button" aria-label="Play the call">
+            <span class="lens" aria-hidden="true"><svg viewBox="0 0 34 34"><circle class="ring" cx="17" cy="17" r="15"/><circle class="prog" cx="17" cy="17" r="15"/></svg><i></i></span>
+            <span id="callRecLbl">Play call</span>
+          </button>
+        </div>
+        <div class="script">
+          <div class="turn agent" id="tr1"><div class="who">Aki</div><div class="t">Mainway Dental, this is Aki. How can I help?</div></div>
+          <div class="turn caller" id="tr2"><div class="who">Caller</div><div class="t">Do you have anything free on Thursday afternoon?</div></div>
+          <div class="turn agent" id="tr3"><div class="who">Aki</div><div class="t">Thursday at 15:30 with Dr. Kaya is open. <span class="lost">Shall I book it for</span></div></div>
+          <div class="turn caller" id="tr4"><div class="who">Caller</div><div class="t">Anything earlier?</div></div>
+          <div class="turn agent" id="tr5"><div class="who">Aki</div><div class="t">13:00 is free too. Shall I book that one?</div></div>
+        </div>
+        <div class="ladder">
+          <svg viewBox="0 0 700 470" role="img" aria-label="What happens underneath the call">
+            <defs>
+              <marker id="a-caller" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#f1c48b"/></marker>
+              <marker id="a-agent" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#c3adff"/></marker>
+              <marker id="a-sys" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#a9a4b8"/></marker>
+              <marker id="a-cut" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#ff5ad8"/></marker>
+            </defs>
+            <g text-anchor="middle">
+              <text class="lane" x="110" y="18">Caller</text>
+              <text class="lane" x="230" y="18">Phone line</text><text class="tech" x="230" y="34">Asterisk, SIP</text>
+              <text class="lane" x="370" y="18">Mainway</text><text class="tech" x="370" y="34">Node.js, speech to text</text>
+              <text class="lane" x="510" y="18">Claude</text><text class="tech" x="510" y="34">3 fallbacks</text>
+              <text class="lane" x="640" y="18">Voice</text><text class="tech" x="640" y="34">ElevenLabs</text>
+            </g>
+            <line class="life" x1="110" y1="46" x2="110" y2="466"/><line class="life" x1="230" y1="46" x2="230" y2="466"/><line class="life" x1="370" y1="46" x2="370" y2="466"/><line class="life" x1="510" y1="46" x2="510" y2="466"/><line class="life" x1="640" y1="46" x2="640" y2="466"/>
+            <g class="m" data-at="0.3" data-turn="tr1" style="--len:260"><text class="tm" x="0" y="74">0.3 s</text><line class="k-agent" x1="370" y1="70" x2="114" y2="70" marker-end="url(#a-agent)"/><text class="k-agent" x="240" y="62" text-anchor="middle">greeting, already cached</text></g>
+            <g class="m" data-at="2.0" data-turn="tr2" style="--len:260"><text class="tm" x="0" y="120">2.0 s</text><line class="k-caller" x1="110" y1="116" x2="366" y2="116" marker-end="url(#a-caller)"/><text class="k-caller" x="240" y="108" text-anchor="middle">“anything Thursday afternoon?”</text></g>
+            <g class="m" data-at="3.6" style="--len:0"><text class="tm" x="0" y="156">3.6 s</text><rect class="act" x="362" y="126" width="16" height="34" rx="3"/><text class="note" x="386" y="150">0.8 s of silence: your turn is over</text></g>
+            <g class="m" data-at="3.6" style="--len:140"><text class="tm" x="0" y="194">3.6 s</text><line class="k-sys" x1="370" y1="190" x2="506" y2="190" marker-end="url(#a-sys)"/><text class="k-sys" x="440" y="182" text-anchor="middle">transcript + clinic info</text></g>
+            <g class="m" data-at="4.0" style="--len:140"><text class="tm" x="0" y="230">4.0 s</text><line class="k-agent" x1="510" y1="226" x2="374" y2="226" marker-end="url(#a-agent)"/><text class="k-agent" x="440" y="218" text-anchor="middle">first sentence, streamed</text></g>
+            <g class="m" data-at="4.0" style="--len:270"><line class="k-sys" x1="370" y1="242" x2="636" y2="242" marker-end="url(#a-sys)"/><text class="k-sys" x="575" y="258" text-anchor="middle">speak this</text></g>
+            <g class="m" data-at="4.3" data-turn="tr3" style="--len:530"><text class="tm" x="0" y="294">4.3 s</text><line class="k-agent" x1="640" y1="290" x2="114" y2="290" marker-end="url(#a-agent)"/><text class="k-agent" x="300" y="282" text-anchor="middle">“15:30 with Dr. Kaya is open…”</text></g>
+            <g class="m" data-at="5.4" data-turn="tr4" style="--len:260"><text class="tm" x="0" y="340">5.4 s</text><line class="k-caller" x1="110" y1="336" x2="366" y2="336" marker-end="url(#a-caller)"/><text class="k-caller" x="240" y="328" text-anchor="middle">“anything earlier?”</text></g>
+            <g class="m" data-at="5.5" data-cut="1" style="--len:140"><text class="tm" x="0" y="378">5.5 s</text><line class="k-cut" x1="370" y1="374" x2="234" y2="374" marker-end="url(#a-cut)"/><text class="k-cut" x="302" y="366" text-anchor="middle">stop playback</text><text class="note" x="386" y="378">you cut in, Aki stops</text></g>
+            <g class="m" data-at="7.1" data-turn="tr5" style="--len:260"><text class="tm" x="0" y="428">7.1 s</text><line class="k-agent" x1="370" y1="424" x2="114" y2="424" marker-end="url(#a-agent)"/><text class="k-agent" x="240" y="416" text-anchor="middle">“13:00 is free too…”</text></g>
+          </svg>
+        </div>
+      </div>
+      <p class="cap">A test call, drawn as it happens.</p>
+      <div class="story">
+        <div class="rv">
+          <div class="cols">
+            <p>I built every layer alone. Calls arrive over SIP through Asterisk, twenty milliseconds of audio at a time. Speech-to-text runs while you are still talking, Claude writes the answer one sentence at a time, and ElevenLabs starts on the first sentence before the second one exists. If Claude is slow, three other models are waiting.</p>
+            <p>It ran on a real Turkish phone number until the server lease ended in October 2026. A browser demo is being built; until then, its own site walks through a call down to the millisecond.</p>
+          </div>
+          <div class="actions"><nav class="mwlinks" aria-label="Mainway's own site"><a class="mw-p" href="https://mainway.mert.digital/" data-mw="/" target="_blank" rel="noopener"><img src="/files/icon-mainway.svg" alt="">Product page<i class="ph ph-arrow-up-right"></i></a><a class="mw-e" href="https://mainway.mert.digital/engineering/" data-mw="/engineering/" target="_blank" rel="noopener"><span class="led" aria-hidden="true"><i></i><i></i><i></i><i class="on" style="--d:.6s"></i><i></i><i></i><i class="on" style="--d:1.2s"></i><i></i><i class="on" style="--d:.6s"></i><i></i><i class="on"></i><i class="on" style="--d:1.2s"></i><i class="on" style="--d:1.8s"></i><i class="on" style="--d:.6s"></i><i></i><i class="on"></i><i class="on" style="--d:1.2s"></i><i class="on" style="--d:1.8s"></i><i class="on" style="--d:.6s"></i><i class="on" style="--d:2.4s"></i></span>How it’s built<i class="ph ph-arrow-up-right"></i></a></nav></div>
+          <ul class="tags"><li>Node.js</li><li>PostgreSQL</li><li>Asterisk</li><li>Twilio</li><li>Claude API</li><li>ElevenLabs</li><li>Docker</li></ul>
+        </div>
+        <blockquote class="pull rv" style="--c: var(--talks)">The hard part wasn’t the AI. It was knowing when someone has finished talking.</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRACK 2: BRISK -->
+  <section class="scene paper project" id="brisk" data-track="tidies">
+    <div class="wrap">
+      <p class="trackline rv"><canvas data-mini="tidies" data-small></canvas><b>Track 2</b>Out now, open source</p>
+      <h2 class="title rv"><img src="/files/icon-brisk.svg" alt="">brisk</h2>
+      <p class="stand rv">A free Windows cleaner that tells you why your PC is slow, and refuses to claim anything it didn’t measure.</p>
+      <div class="story">
+        <div class="rv">
+          <div class="cols">
+            <p>I wanted a cleaner I could trust. Every diagnosis is a rule you can read in the source, and every finding carries the evidence it was built from. It only touches an allowlist, every change can be undone, and there is no telemetry, no account and no AI inside.</p>
+            <p>Days later it reads its own changes back, to check Windows didn’t quietly undo them. 171 tests keep it honest. One line to install:</p>
+          </div>
+          <div class="term"><code>irm https://raw.githubusercontent.com/merturl4576/brisk/main/get.ps1 | iex</code><button type="button" data-copy="irm https://raw.githubusercontent.com/merturl4576/brisk/main/get.ps1 | iex"><i class="ph ph-copy"></i>Copy</button></div>
+          <div class="actions"><a class="btn primary" href="https://github.com/merturl4576/brisk" target="_blank" rel="noopener"><i class="ph ph-github-logo"></i>View on GitHub</a><a class="btn" href="https://github.com/merturl4576/brisk/releases/tag/v0.9.0" target="_blank" rel="noopener"><i class="ph ph-download-simple"></i>Download v0.9</a></div>
+          <ul class="tags"><li>C#</li><li>.NET 8</li><li>WPF</li><li>PowerShell</li></ul>
+        </div>
+        <blockquote class="pull rv" style="--c: var(--tidies)">If brisk can’t measure it, brisk doesn’t say it.</blockquote>
+      </div>
+      <div class="media bento">
+        <figure class="shot lead rv"><img src="/files/brisk-demo.gif" width="720" height="648" alt="brisk: one scan, one click, the health score goes from 53 to 86"><figcaption>One scan, one click. The health score goes from 53 to 86.</figcaption></figure>
+        <figure class="shot rv"><img src="/files/brisk-privacy-readback.png" width="1500" height="1020" alt="The Privacy page with its read-back band"><figcaption>Privacy: counts, never contents.</figcaption></figure>
+        <figure class="shot rv"><img src="/files/brisk-performance-readback.png" width="1500" height="1020" alt="The Performance page"><figcaption>Performance: every number says where it came from.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRACK 3: BOOKSY TR -->
+  <section class="scene paper project" id="booksy" data-track="books">
+    <div class="wrap">
+      <p class="trackline rv"><canvas data-mini="books" data-small></canvas><b>Track 3</b>In development, iOS and Android</p>
+      <h2 class="title rv"><img src="/files/icon-booksy.svg" alt="">Booksy TR</h2>
+      <p class="stand rv">Booking for barbers, hairdressers, nail and massage salons in Turkey. You find a free slot today; the shop sees its whole day on one screen.</p>
+      <div class="story">
+        <div class="rv">
+          <div class="cols">
+            <p>Two apps on one Supabase backend, one for customers and one for the shop. It began as a clickable prototype: filmed salon scenes behind the search, a headline word that changes with each scene, and a calendar that flags first-time customers so the shop can greet them properly.</p>
+            <p>Now it is moving into Expo, one screen at a time. The working name is sıradaki, “who’s next”. If you want to click through the prototype, ask me and I’ll send the link.</p>
+          </div>
+          <ul class="tags"><li>TypeScript</li><li>React Native</li><li>Expo</li><li>Supabase</li><li>Postgres</li></ul>
+        </div>
+        <blockquote class="pull rv" style="--c: var(--books)">The shop should know who’s walking in for the first time.</blockquote>
+      </div>
+      <div class="media">
+      <div class="strip rv" tabindex="0" aria-label="Screens from the prototype">
+      <div class="panel" style="background:#0b5e5b;color:#fff">
+        <span class="brand"><img src="/files/icon-booksy.svg" alt="">sıradaki</span>
+        <h5 style="margin-top:26px">Bugün <em style="color:#ffb59c">saçına</em> bir saat ayır.</h5>
+        <p>Berber, kuaför, tırnak, masaj. Yakınındaki boş saatler tek yerde.</p>
+        <div class="phone"><div class="scr"><div class="vid" style="background-image:url(/files/booksy-kuafor.jpg)"><b>Bugün saçına bir saat ayır</b><div class="s">Berber, kuaför, tırnak…</div></div><div class="pad"><div class="h">Bugün boş saatler</div><div class="sl"><span>12:45</span><span class="f">İlk ziyaret</span><span>17:30</span></div></div></div></div>
+      </div>
+      <div class="panel" style="background:#fff;color:#15171c">
+        <span class="lbl" style="color:#ff6a3d">Keşfet</span>
+        <h5>Boş saati gör, <em style="color:#0b5e5b">hemen al.</em></h5>
+        <p>Puan, mesafe ve bugünkü boşluklar aynı kartta.</p>
+        <div class="phone"><div class="scr"><div class="pad"><div class="h">Berber, Kuaför, Tırnak</div>
+          <div class="card2"><b>Kadıköy Berber</b><i>★</i> 4,9 · 0,6 km<div class="sl" style="margin-top:4px"><span class="x">13:00</span><span>14:30</span><span>16:15</span></div></div>
+          <div class="card2"><b>Moda Kuaför</b><i>★</i> 4,7 · 1,1 km<div class="sl" style="margin-top:4px"><span>12:45</span><span>17:30</span></div></div>
+          <div class="card2"><b>Nail Lab</b><i>★</i> 4,8 · 1,4 km<div class="sl" style="margin-top:4px"><span>15:00</span><span class="x">18:00</span></div></div></div></div></div>
+      </div>
+      <div class="panel" style="background:#ff6a3d;color:#fff">
+        <span class="lbl">Randevu</span>
+        <h5>Ustanı seç, <em style="color:#3a1306">saatini seç.</em></h5>
+        <p>Dolu saatler üstü çizili. Tahmin yok.</p>
+        <div class="phone"><div class="scr"><div class="days"><span>Pzt</span><span class="on">Sal</span><span>Çar</span><span>Per</span></div><div class="pad"><div class="h">Usta: Emre</div><div class="grid"><span class="x">10:00</span><span>10:30</span><span class="x">11:00</span><span>11:30</span><span>13:00</span><span class="sel">13:30</span><span class="x">14:00</span><span>14:30</span><span>15:00</span><span class="x">15:30</span><span>16:00</span><span>16:30</span></div></div></div></div>
+      </div>
+      <div class="panel" style="background:#e6f1ef;color:#15171c">
+        <span class="lbl" style="color:#0b5e5b">Onay</span>
+        <h5>Onaylandı. <em style="color:#0b5e5b">Biletin cebinde.</em></h5>
+        <p>Tik çizilir, randevu kartı hazır.</p>
+        <div class="phone"><div class="scr"><div class="tick"><i class="ph ph-check" style="color:#0b5e5b;font-size:22px"></i></div><div class="ticket"><b>Salı, 13:30</b>Moda Kuaför, Emre<br>Saç kesimi, 45 dk</div></div></div>
+      </div>
+      <div class="panel" style="background:#15171c;color:#fff">
+        <span class="lbl" style="color:#ff8a65">İşletme</span>
+        <h5>Bütün günün <em style="color:#7fd6cf">tek ekranda.</em></h5>
+        <p>İlk kez gelen müşteri işaretli.</p>
+        <div class="phone"><div class="scr"><div class="days"><span>Pzt</span><span class="on">Sal</span><span>Çar</span><span>Per</span></div><div class="cal"><div class="r">10:00<span>Ali, sakal</span></div><div class="r">11:00<span class="n">Deniz, ilk ziyaret</span></div><div class="r">12:00<span class="e"></span></div><div class="r">13:30<span>Ece, kesim</span></div><div class="r">15:00<span>Can, kesim</span></div></div></div></div>
+      </div>
+      </div>
+      <p class="cap">From the prototype. The final screens are being rebuilt in Expo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRACK 4: RED TEAM -->
+  <section class="scene night project" id="redteam" data-track="breaks">
+    <div class="wrap">
+      <p class="trackline rv"><canvas data-mini="breaks" data-small></canvas><b>Track 4</b>In development, private</p>
+      <h2 class="title rv"><img src="/files/icon-redteam.svg" alt="">Red team agent</h2>
+      <p class="stand rv">An agent that hunts for security bugs in bug-bounty programmes, built so it can’t break the rules it’s given.</p>
+      <div class="story">
+        <div class="rv">
+          <div class="cols">
+            <p>It wraps the open-source Strix engine in a safety core of my own. Before any request leaves, a scope gate checks the target against the programme’s rules, and the sandbox can only reach hosts on an allowlist.</p>
+            <p>Findings come to me as drafts, and I decide what gets sent.</p>
+          </div>
+          <div class="stamp"><i class="ph ph-lock-simple" aria-hidden="true"></i><span><b>Private repo</b><small>Walkthrough on request</small></span></div>
+          <ul class="tags"><li>Python</li><li>Docker</li><li>WSL2</li><li>Strix</li></ul>
+        </div>
+        <blockquote class="pull rv" style="--c: var(--breaks)">Finding bugs is the easy part. Staying inside the rules while you look is the work.</blockquote>
+      </div>
+        <div class="finds rv">
+          <div class="note">
+            <p class="k">Found so far</p>
+            <p>Two reports, both confirmed and disclosed responsibly. The technical details follow once the advisories are public.</p>
+          </div>
+          <div class="slips">
+            <article class="slip hi" style="--s: 8.8">
+              <p class="who">Confirmed by the maintainer</p>
+              <p class="score"><b>8.8</b><span>CVSS<br>High</span></p>
+              <div class="meter" aria-hidden="true"></div>
+              <h3>Remote code execution in LEANN</h3>
+              <p class="ctx">An open-source vector database with 13k stars on GitHub.</p>
+              <p class="ids"><span>Reported privately</span><span>CVE pending</span></p>
+            </article>
+            <article class="slip mid" style="--s: 5.3">
+              <p class="who">Validated by Patchstack</p>
+              <p class="score"><b>5.3</b><span>CVSS<br>Medium</span></p>
+              <div class="meter" aria-hidden="true"></div>
+              <h3>Broken access control in Supsystic Contact Form</h3>
+              <p class="ctx">A WordPress plugin. The bug needs no login.</p>
+              <p class="ids"><span>CVE-2026-115595 · reserved</span><span>OWASP A01</span></p>
+            </article>
+          </div>
+        </div>
+        <figure class="media flow rv">
+          <svg viewBox="0 0 640 300" role="img" aria-label="Every request passes a scope gate and an egress allowlist">
+            <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#ecebe8"/></marker></defs>
+            <rect class="box" x="10" y="118" width="120" height="64" rx="10"/><text x="70" y="146" text-anchor="middle">Agent</text><text class="small" x="70" y="166" text-anchor="middle">Strix engine</text>
+            <rect class="gate" x="200" y="104" width="140" height="92" rx="10"/><text x="270" y="140" text-anchor="middle">Scope gate</text><text class="small" x="270" y="162" text-anchor="middle">programme rules</text>
+            <rect class="gate" x="410" y="104" width="140" height="92" rx="10"/><text x="480" y="140" text-anchor="middle">Allowlist</text><text class="small" x="480" y="162" text-anchor="middle">sandbox network</text>
+            <line class="ok" x1="130" y1="150" x2="196" y2="150" stroke-width="1.6" marker-end="url(#ar)"/>
+            <line class="ok" x1="340" y1="150" x2="406" y2="150" stroke-width="1.6" marker-end="url(#ar)"/>
+            <line class="ok" x1="550" y1="150" x2="626" y2="150" stroke-width="1.6" marker-end="url(#ar)"/><text class="small" x="588" y="138" text-anchor="middle">target</text>
+            <path class="no" d="M270 104 V52 H340" fill="none" stroke-width="1.6"/><text class="notext" x="346" y="56">admin.example.com, out of scope</text>
+            <path class="no" d="M480 196 V250 H410" fill="none" stroke-width="1.6"/><text class="notext" x="404" y="254" text-anchor="end">169.254.169.254, not allowed</text>
+          </svg>
+        </figure>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="scene paper about" id="about">
+    <div class="wrap">
+      <h2 class="rv">About</h2>
+      <div class="qa">
+        <div class="rv"><p class="q"><span>--:--</span>Where are you from?</p><p class="a">Türkiye. I also hold a Bulgarian passport, so I can work anywhere in the EU without a visa. I’ve lived in Wrocław on my own since 2024.</p></div>
+        <div class="rv"><p class="q"><span>--:--</span>What are you studying?</p><p class="a">IT engineering at WSB Merito, third year of three and a half. Last year I averaged 4.79 out of 5.</p></div>
+        <div class="rv"><p class="q"><span>--:--</span>How do you build?</p><p class="a">With coding agents, a lot. They let me ship more than I could alone. The part I like is everything around them: deciding what to build, splitting the work, and checking what comes back.</p></div>
+        <div class="rv"><p class="q"><span>--:--</span>And when you’re not building?</p><p class="a">I make small games in Godot. One of them is a judge simulator in the spirit of Papers, Please.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- END OF RECORDING -->
+  <footer class="scene night end" id="end">
+    <canvas id="flat" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <h2 class="rv" id="stopped">Recording stopped<br><span id="stopAt">here</span>.</h2>
+      <p class="say rv">That’s the short version. <b>If you want to hear more from me,</b> write, and I’ll usually answer the same day.</p>
+      <a class="mail rv" href="mailto:merturl67@gmail.com">merturl67@gmail.com</a>
+      <div class="ctas rv">
+        <a class="btn primary" href="/files/Mert-Ural-CV.pdf" download="Mert-Ural-CV.pdf"><i class="ph ph-download-simple"></i>Download CV</a>
+        <a class="btn" href="https://github.com/merturl4576" target="_blank" rel="noopener"><i class="ph ph-github-logo"></i>GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/mert-ural-9abb7822b/" target="_blank" rel="noopener"><i class="ph ph-linkedin-logo"></i>LinkedIn</a>
+        <button class="btn" type="button" id="rewind"><i class="ph ph-rewind"></i>Rewind</button>
+      </div>
+      <div class="foot"><span>mert.digital, Wrocław</span><span>+48 453 102 583</span></div>
+    </div>
+  </footer>
+</main>
+
+
+<script>
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var COL = { talks: '#9b7cff', tidies: '#2fc6dc', books: '#ff6a3d', breaks: '#ebc23a' };
+  var root = document.documentElement;
+
+  /* ---------- Mainway links: the live site, or the copy on :8093 while this page is served from this machine or the LAN ---------- */
+  (function () {
+    var h = location.hostname;
+    if (!/^(localhost|127\.0\.0\.1|10\.\d+\.\d+\.\d+|192\.168\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+)$/.test(h)) return;
+    document.querySelectorAll('a[data-mw]').forEach(function (a) { a.href = location.protocol + '//' + h + ':8093' + a.getAttribute('data-mw'); });
+  })();
+
+  /* ---------- the clock: the visitor's own time on the page ---------- */
+  // runs from page load, pauses while the tab is hidden, stops on the last frame
+  var acc = 0, runFrom = document.hidden ? 0 : performance.now(), stopped = false;
+  function elapsed() { return (acc + (runFrom ? performance.now() - runFrom : 0)) / 1000; }
+  function pause() { if (runFrom) { acc += performance.now() - runFrom; runFrom = 0; } }
+  function resume() { if (!runFrom && !stopped && !document.hidden) runFrom = performance.now(); }
+  document.addEventListener('visibilitychange', function () { if (document.hidden) pause(); else resume(); });
+  function pad(n) { return ('0' + n).slice(-2); }
+  function stamp(s) { s = Math.floor(s); var h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60; return (h ? h + ':' + pad(m) : pad(m)) + ':' + pad(s % 60); }
+
+  /* ---------- copy ---------- */
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      try { navigator.clipboard.writeText(b.dataset.copy); } catch (e) {}
+      var h = b.innerHTML; b.innerHTML = '<i class="ph ph-check"></i>Copied'; setTimeout(function () { b.innerHTML = h; }, 1400);
+    });
+  });
+
+  /* ---------- canvas helpers ---------- */
+  function fit(c) {
+    var r = c.getBoundingClientRect(), d = Math.min(2, window.devicePixelRatio || 1);
+    if (c.width !== Math.round(r.width * d) || c.height !== Math.round(r.height * d)) { c.width = Math.round(r.width * d); c.height = Math.round(r.height * d); }
+    var g = c.getContext('2d'); g.setTransform(d, 0, 0, d, 0, 0); return { g: g, w: r.width, h: r.height };
+  }
+  function hash(i) { var x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+  function ink() { return getComputedStyle(root).getPropertyValue('--fg').trim() || '#ecebe8'; }
+  function alpha(hex, a) { var n = parseInt(hex.slice(1), 16); return 'rgba(' + (n >> 16) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
+
+  /* ---------- the sentence: a live waveform that keeps playing ---------- */
+  var words = [['I', .14, 1], ['build', .3, 1], ['software', .52, 3], ['that', .2, 1], ['talks', .44, 1, 'talks'], ['tidies', .5, 2, 'tidies'], ['books', .36, 1, 'books'], ['and', .2, 1], ['breaks in', .66, 2, 'breaks']];
+  var gaps = [.06, .05, .06, .14, .2, .2, .1, .07, 0];
+  var dur = .12, spans = []; words.forEach(function (w, i) { spans.push([dur, dur + w[1], w]); dur += w[1] + gaps[i]; }); dur += .15;
+  var focusK = null, activeK = null;
+  var waveC = document.getElementById('wave'), saidWords = document.querySelectorAll('.said .w'), rows = document.querySelectorAll('.trk');
+  function setActive(k) {
+    if (k === activeK) return; activeK = k;
+    var show = focusK || k;
+    saidWords.forEach(function (w) { w.classList.toggle('on', w.dataset.k === show); w.style.setProperty('--c', COL[w.dataset.k]); });
+  }
+  function drawWave(t) {
+    var f = fit(waveC), g = f.g, w = f.w, h = f.h, mid = h / 2;
+    g.clearRect(0, 0, w, h);
+    var cycle = dur * 1.35, ph = reduce ? dur : (t % cycle), head = Math.min(ph, dur) / dur;
+    var pad = Math.max(18, w * .04), span = w - pad * 2, step = 5, playing = null;
+    for (var x = 0; x <= span; x += step) {
+      var s = x / span * dur, sp = null;
+      for (var j = 0; j < spans.length; j++) if (s >= spans[j][0] && s <= spans[j][1]) { sp = spans[j]; break; }
+      var played = x / span <= head;
+      if (!sp) { g.fillStyle = alpha(ink().startsWith('#') ? ink() : '#ecebe8', played ? .22 : .1); g.fillRect(pad + x, mid - 1, 2.5, 2); continue; }
+      var u = (s - sp[0]) / (sp[1] - sp[0]), word = sp[2], k = word[3];
+      var env = Math.pow(Math.sin(Math.PI * u), .55) * (.55 + .45 * Math.abs(Math.sin(Math.PI * u * word[2])));
+      var live = reduce ? 1 : (.78 + .16 * Math.sin(t * 5.3 + x * .07) + .08 * Math.sin(t * 11.7 + x * .19));
+      var amp = (h * .44) * env * (.4 + .6 * hash(x)) * live * (k ? 1 : .7);
+      var under = Math.abs(x / span - head) < .012 && ph < dur;
+      if (k && under) playing = k;
+      var a;
+      if (k) {
+        var hot = focusK ? focusK === k : (activeK === k);
+        a = focusK ? (focusK === k ? 1 : .14) : (hot ? 1 : (played ? .78 : .34));
+        if (hot) amp *= 1.12;
+        g.fillStyle = alpha(COL[k], a);
+      } else {
+        a = focusK ? .1 : (played ? .42 : .2);
+        var base = ink(); g.fillStyle = alpha(base.startsWith('#') ? base : '#ecebe8', a);
+      }
+      g.fillRect(pad + x, mid - amp, 2.5, amp * 2);
+    }
+    if (!reduce && ph < dur) { g.fillStyle = alpha('#ffffff', .85); g.fillRect(pad + head * span, 6, 1.2, h - 12); }
+    setActive(ph < dur ? (playing || activeK) : null);
+  }
+
+  /* ---------- small live waves: track rows and track lines ---------- */
+  var minis = [].slice.call(document.querySelectorAll('canvas[data-mini]'));
+  function drawMini(c, t) {
+    var k = c.dataset.mini, f = fit(c), g = f.g, w = f.w, h = f.h, mid = h / 2, small = c.hasAttribute('data-small');
+    g.clearRect(0, 0, w, h);
+    var hot = small || focusK === k || (!focusK && activeK === k), step = small ? 4 : 5;
+    for (var x = 0; x <= w; x += step) {
+      var i = x / step, base = .25 + .75 * hash(i + k.length * 31);
+      var env = Math.sin(Math.PI * ((x / w) * 3 % 1));
+      var live = reduce ? .6 : (.55 + .45 * Math.sin(t * (hot ? 7 : 3) + i * .55) * Math.sin(t * 2.1 + i * .13));
+      var amp = Math.max(1.5, (h * .46) * base * Math.abs(live) * (.4 + .6 * env) * (hot ? 1 : .62));
+      g.fillStyle = alpha(COL[k], hot ? .95 : (focusK ? .18 : .5));
+      g.fillRect(x, mid - amp, small ? 2 : 2.5, amp * 2);
+    }
+  }
+
+  /* hover / focus on a track lights its colour everywhere */
+  function focusOn(k) { focusK = k; saidWords.forEach(function (w) { w.classList.toggle('on', w.dataset.k === k); w.style.setProperty('--c', COL[w.dataset.k]); }); }
+  function focusOff() { focusK = null; activeK = '_'; }
+  rows.forEach(function (r) { r.addEventListener('mouseenter', function () { focusOn(r.dataset.k); }); r.addEventListener('mouseleave', focusOff); r.addEventListener('focus', function () { focusOn(r.dataset.k); }); r.addEventListener('blur', focusOff); });
+  saidWords.forEach(function (w) {
+    w.addEventListener('mouseenter', function () { focusOn(w.dataset.k); }); w.addEventListener('mouseleave', focusOff);
+    w.addEventListener('click', function () { document.querySelector('.trk[data-k="' + w.dataset.k + '"]').click(); });
+  });
+
+  /* ---------- the tape: the whole page as one recording ---------- */
+  var tape = document.getElementById('tape'), scenes = [].slice.call(document.querySelectorAll('.scene')), tc = document.getElementById('tc'), rec = document.getElementById('rec');
+  function progress() { var max = document.documentElement.scrollHeight - innerHeight; return max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0; }
+  function regions() {
+    var H = document.documentElement.scrollHeight;
+    return scenes.map(function (s) { return { a: s.offsetTop / H, b: (s.offsetTop + s.offsetHeight) / H, k: s.dataset.track || null, el: s }; });
+  }
+  function drawTape(t) {
+    var f = fit(tape), g = f.g, w = f.w, h = f.h, mid = h / 2, p = progress(), R = regions(), step = 4;
+    g.clearRect(0, 0, w, h);
+    var base = ink(); base = base.startsWith('#') ? base : '#ecebe8';
+    for (var x = 0; x <= w; x += step) {
+      var q = x / w, reg = null;
+      for (var j = 0; j < R.length; j++) if (q >= R[j].a && q <= R[j].b) { reg = R[j]; break; }
+      var i = x / step, env = .3 + .7 * hash(i * .37);
+      var live = reduce ? 1 : (.75 + .25 * Math.sin(t * 4 + i * .4));
+      var amp = Math.max(1, h * .42 * env * live * (reg && reg.k ? 1 : .55));
+      var played = q <= p;
+      g.fillStyle = reg && reg.k ? alpha(COL[reg.k], played ? .95 : .35) : alpha(base, played ? .5 : .16);
+      g.fillRect(x, mid - amp, 2, amp * 2);
+    }
+    g.fillStyle = base; g.fillRect(p * w - .6, 0, 1.2, h);
+  }
+  tape.addEventListener('click', function (e) {
+    var r = tape.getBoundingClientRect(), q = (e.clientX - r.left) / r.width;
+    window.scrollTo({ top: q * (document.documentElement.scrollHeight - innerHeight), behavior: reduce ? 'auto' : 'smooth' });
+  });
+
+  /* ---------- end of recording: one last word, then flat ---------- */
+  var flat = document.getElementById('flat');
+  function drawFlat(t) {
+    var f = fit(flat), g = f.g, w = f.w, h = f.h, mid = h / 2, base = ink(); base = base.startsWith('#') ? base : '#ecebe8';
+    g.clearRect(0, 0, w, h);
+    for (var x = 0; x <= w; x += 5) {
+      var q = x / w, env = Math.exp(-Math.pow((q - .22) / .12, 2));
+      var live = reduce ? 1 : (.7 + .3 * Math.sin(t * 6 + x * .09));
+      var amp = Math.max(.8, h * .42 * env * (.35 + .65 * hash(x)) * live);
+      g.fillStyle = alpha(base, q < .5 ? .7 : .25); g.fillRect(x, mid - amp, 2.5, amp * 2);
+    }
+  }
+
+
+  /* ---------- the clock on screen: the strip, the viewfinder, the transcript, the last frame ---------- */
+  var vf = document.getElementById('vf'), stopAt = document.getElementById('stopAt');
+  function tickClock() {
+    var s = elapsed();
+    tc.textContent = (stopped ? 'STOPPED ' : 'REC ') + stamp(s);
+    vf.textContent = pad(Math.floor(s / 3600)) + ':' + stamp(s % 3600);
+  }
+  // the recording stops the moment its last frame comes into view, and picks up again on the way back up
+  new IntersectionObserver(function (es) { es.forEach(function (e) {
+    if (!e.isIntersecting || stopped) return;
+    pause(); stopped = true; rec.classList.add('stopped');
+    stopAt.textContent = 'at ' + stamp(elapsed()); tickClock();
+  }); }, { threshold: .15 }).observe(document.getElementById('stopped'));
+  new IntersectionObserver(function (es) { es.forEach(function (e) {
+    if (e.isIntersecting || !stopped) return;
+    stopped = false; rec.classList.remove('stopped'); resume(); tickClock();
+  }); }).observe(document.getElementById('end'));
+  // each question is stamped with the visitor's time when they reach it
+  var qIO = new IntersectionObserver(function (es) { es.forEach(function (e) {
+    if (!e.isIntersecting) return; e.target.textContent = stamp(elapsed()); qIO.unobserve(e.target);
+  }); }, { rootMargin: '0px 0px -25% 0px' });
+  document.querySelectorAll('.qa .q span').forEach(function (s) { qIO.observe(s); });
+
+  /* ---------- reveals ---------- */
+  var revealIO = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); revealIO.unobserve(e.target); } }); }, { threshold: .15 });
+  document.querySelectorAll('.rv').forEach(function (el, i) { el.style.transitionDelay = (el.closest('.hero') ? i * 90 : 0) + 'ms'; revealIO.observe(el); });
+
+  /* ---------- Mainway call: plays once when it comes into view, then waits on the record button ---------- */
+  var call = document.getElementById('call'), ms = [].slice.call(call.querySelectorAll('.m')), turns = [].slice.call(call.querySelectorAll('.turn'));
+  var callT = document.getElementById('callT'), recBtn = document.getElementById('callRec'), recLbl = document.getElementById('callRecLbl');
+  // played at 1.5x: one second of the real call takes 667 ms on screen
+  var SPEED = 1.5, STEP = 1000 / SPEED, LEAD = 250, LENGTH = 7.1 * STEP + LEAD + 600, timers = [], started = 0, callRaf = 0;
+  function show(m) { m.classList.add('on'); var tr = m.dataset.turn; if (tr) document.getElementById(tr).classList.add('on'); if (m.hasAttribute('data-cut')) document.getElementById('tr3').classList.add('cut'); }
+  function clock(ms) { var s = Math.max(0, Math.min(7, Math.floor((ms - LEAD) / STEP))); callT.textContent = '00:0' + s; }
+  function stopTimers() { timers.forEach(clearTimeout); timers = []; cancelAnimationFrame(callRaf); }
+  function finish(nudge) {
+    stopTimers(); ms.forEach(show);
+    call.classList.remove('playing'); call.classList.add('done'); call.classList.toggle('nudge', !!nudge);
+    call.style.setProperty('--p', 1); callT.textContent = '00:07';
+    recLbl.textContent = 'Replay call'; recBtn.setAttribute('aria-label', 'Replay the call');
+  }
+  function play() {
+    stopTimers();
+    call.classList.add('snap');
+    ms.forEach(function (m) { m.classList.remove('on'); }); turns.forEach(function (t) { t.classList.remove('on', 'cut'); });
+    call.classList.remove('done', 'nudge'); call.style.setProperty('--p', 0); callT.textContent = '00:00';
+    void call.offsetWidth; call.classList.remove('snap');
+    if (reduce) { finish(false); return; }
+    call.classList.add('playing'); recLbl.textContent = 'Skip'; recBtn.setAttribute('aria-label', 'Skip to the end of the call');
+    started = performance.now();
+    ms.forEach(function (m) { timers.push(setTimeout(function () { show(m); }, parseFloat(m.dataset.at) * STEP + LEAD)); });
+    timers.push(setTimeout(function () { finish(true); }, LENGTH));
+    (function tick(now) { var e = now - started; call.style.setProperty('--p', Math.min(1, e / LENGTH)); clock(e); if (e < LENGTH) callRaf = requestAnimationFrame(tick); })(started);
+  }
+  recBtn.addEventListener('click', function () { if (call.classList.contains('playing')) finish(false); else play(); });
+  var callIO = new IntersectionObserver(function (es) { es.forEach(function (e) {
+    if (!e.isIntersecting) return; callIO.disconnect(); play();
+  }); }, { threshold: .35 });
+  callIO.observe(call);
+
+  /* ---------- rewind ---------- */
+  document.getElementById('rewind').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
+
+  /* ---------- one loop draws everything that is on screen ---------- */
+  var visible = new Set();
+  var visIO = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) visible.add(e.target); else visible.delete(e.target); }); });
+  [waveC, flat].concat(minis).forEach(function (c) { visIO.observe(c); });
+  var t0 = performance.now();
+  function loop(now) {
+    var t = (now - t0) / 1000;
+    drawTape(t);
+    if (visible.has(waveC)) drawWave(t);
+    if (visible.has(flat)) drawFlat(t);
+    minis.forEach(function (c) { if (visible.has(c)) drawMini(c, t); });
+    tickClock();
+    if (!reduce) requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+  if (reduce) { setTimeout(function () { drawWave(0); minis.forEach(function (c) { drawMini(c, 0); }); drawFlat(0); }, 300); addEventListener('scroll', function () { drawTape(0); }, { passive: true }); setInterval(tickClock, 500); }
+})();
+</script>
+</body>
+</html>
