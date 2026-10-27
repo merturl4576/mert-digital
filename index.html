@@ -121,7 +121,7 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
 .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 22px; }
 .media { margin-top: clamp(44px, 4vw, 64px); }
 .shot { margin: 0; }
-.shot img { display: block; width: 100%; height: auto; border-radius: 10px; box-shadow: 0 0 0 1px var(--ring), 0 30px 60px -30px var(--drop); }
+.shot img, .shot video { display: block; width: 100%; height: auto; border-radius: 10px; box-shadow: 0 0 0 1px var(--ring), 0 30px 60px -30px var(--drop); }
 .shot figcaption { margin-top: 12px; font-size: 13px; color: var(--fg-3); }
 
 /* Mainway scene */
@@ -468,9 +468,9 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
         <blockquote class="pull rv" style="--c: var(--tidies)">If brisk can’t measure it, brisk doesn’t say it.</blockquote>
       </div>
       <div class="media bento">
-        <figure class="shot lead rv"><img src="/files/brisk-demo.gif" width="720" height="648" alt="brisk: one scan, one click, the health score goes from 53 to 86"><figcaption>One scan, one click. The health score goes from 53 to 86.</figcaption></figure>
-        <figure class="shot rv"><img src="/files/brisk-privacy-readback.png" width="1500" height="1020" alt="The Privacy page with its read-back band"><figcaption>Privacy: counts, never contents.</figcaption></figure>
-        <figure class="shot rv"><img src="/files/brisk-performance-readback.png" width="1500" height="1020" alt="The Performance page"><figcaption>Performance: every number says where it came from.</figcaption></figure>
+        <figure class="shot lead rv"><video id="briskDemo" src="/files/brisk-demo.mp4" poster="/files/brisk-demo-poster.webp" width="720" height="648" muted loop playsinline preload="none" aria-label="brisk: one scan, one click, the health score goes from 53 to 86"></video><figcaption>One scan, one click. The health score goes from 53 to 86.</figcaption></figure>
+        <figure class="shot rv"><img src="/files/brisk-privacy-readback.png" width="1500" height="1020" loading="lazy" decoding="async" alt="The Privacy page with its read-back band"><figcaption>Privacy: counts, never contents.</figcaption></figure>
+        <figure class="shot rv"><img src="/files/brisk-performance-readback.png" width="1500" height="1020" loading="lazy" decoding="async" alt="The Performance page"><figcaption>Performance: every number says where it came from.</figcaption></figure>
       </div>
     </div>
   </section>
@@ -798,6 +798,12 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
   /* ---------- reveals ---------- */
   var revealIO = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); revealIO.unobserve(e.target); } }); }, { threshold: .15 });
   document.querySelectorAll('.rv').forEach(function (el, i) { el.style.transitionDelay = (el.closest('.hero') ? i * 90 : 0) + 'ms'; revealIO.observe(el); });
+
+  /* ---------- brisk demo: downloads only once it is near the screen, plays only while it is on it ---------- */
+  var demo = document.getElementById('briskDemo');
+  new IntersectionObserver(function (es) { es.forEach(function (e) {
+    if (e.isIntersecting) { var p = demo.play(); if (p) p.catch(function () {}); } else demo.pause();
+  }); }, { rootMargin: '400px 0px' }).observe(demo);
 
   /* ---------- Mainway call: plays once when it comes into view, then waits on the record button ---------- */
   var call = document.getElementById('call'), ms = [].slice.call(call.querySelectorAll('.m')), turns = [].slice.call(call.querySelectorAll('.turn'));
