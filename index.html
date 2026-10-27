@@ -286,9 +286,11 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
 .slip .score span { font-size: 12.5px; font-weight: 500; line-height: 1.3; color: #5e5a53; }
 .slip .meter { position: relative; height: 12px; margin-top: 18px; background: repeating-linear-gradient(90deg, rgba(21,20,19,.13) 0 2px, transparent 2px 5px); }
 .slip .meter::before { content: ""; position: absolute; inset: 0 auto 0 0; width: calc(var(--s) * 10%); background: repeating-linear-gradient(90deg, #c8960e 0 2px, transparent 2px 5px); }
-.slip h3 { margin: 20px 0 0; font-size: 21px; font-weight: 600; line-height: 1.22; letter-spacing: -.02em; }
+.slip h3 { margin: 20px 0 0; font-size: 21px; font-weight: 600; line-height: 1.22; letter-spacing: -.02em; text-wrap: balance; }
 .slip .ctx { margin: 6px 0 0; font-size: 14.5px; line-height: 1.5; color: #5e5a53; }
 .slip .ids { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 18px 0 0; padding-top: 12px; border-top: 1px dashed rgba(21,20,19,.2); font-size: 12.5px; font-weight: 500; color: #6b675f; }
+.slip .ids a { color: #151413; text-decoration: underline; text-decoration-color: rgba(200,150,14,.7); text-underline-offset: 3px; }
+.slip .ids a:hover { text-decoration-color: #c8960e; }
 .slip.mid .score b { font-size: clamp(46px, 3.8vw, 58px); }
 .slip.mid h3 { font-size: 19px; }
 
@@ -550,16 +552,16 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
         <div class="finds rv">
           <div class="note">
             <p class="k">Found so far</p>
-            <p>Two reports, both confirmed and disclosed responsibly. The technical details follow once the advisories are public.</p>
+            <p>Three reports, all confirmed and disclosed responsibly. One CVE is public; the LEANN details follow once those advisories are published.</p>
           </div>
           <div class="slips">
             <article class="slip hi" style="--s: 8.8">
               <p class="who">Confirmed by the maintainer</p>
               <p class="score"><b>8.8</b><span>CVSS<br>High</span></p>
               <div class="meter" aria-hidden="true"></div>
-              <h3>Remote code execution in LEANN</h3>
+              <h3>Two remote code execution bugs in LEANN</h3>
               <p class="ctx">An open-source vector database with 13k stars on GitHub.</p>
-              <p class="ids"><span>Reported privately</span><span>CVE pending</span></p>
+              <p class="ids"><span>2 GitHub advisories</span><span>CVE pending</span></p>
             </article>
             <article class="slip mid" style="--s: 5.3">
               <p class="who">Validated by Patchstack</p>
@@ -567,7 +569,7 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
               <div class="meter" aria-hidden="true"></div>
               <h3>Broken access control in Supsystic Contact Form</h3>
               <p class="ctx">A WordPress plugin. The bug needs no login.</p>
-              <p class="ids"><span>CVE-2026-115595 · reserved</span><span>OWASP A01</span></p>
+              <p class="ids"><span><a href="https://www.cve.org/CVERecord?id=CVE-2026-115595" target="_blank" rel="noopener">CVE-2026-115595</a></span><span>OWASP A01</span></p>
             </article>
           </div>
         </div>
