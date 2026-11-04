@@ -184,8 +184,7 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
              font: 500 14.5px var(--font); color: var(--fg); white-space: nowrap; transition: background-color .3s, background-size .3s var(--ease); }
 .mwlinks a .ph-arrow-up-right { font-size: 1em; color: currentColor; opacity: .7; transition: transform .3s var(--ease), opacity .3s; }
 .mwlinks a:hover .ph-arrow-up-right { transform: translate(2px, -2px); opacity: 1; }
-.mwlinks .mw-p { background: var(--talks); color: #140c26; }
-.mwlinks .mw-p:hover { background: #ad93ff; }
+.mwlinks .mw-p:hover { background: color-mix(in srgb, var(--fg) 7%, transparent); }
 .mwlinks .mw-p img { width: 22px; height: 22px; border-radius: 6px; background: #140c26; padding: 2px; }
 .mwlinks .mw-e { background-image: linear-gradient(rgba(155,124,255,.2) 1px, transparent 1px), linear-gradient(90deg, rgba(155,124,255,.2) 1px, transparent 1px); background-size: 7px 7px; }
 .mwlinks .mw-e:hover { background-size: 6px 6px; }
@@ -194,7 +193,62 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
 .mwlinks .led i.on { background: var(--talks); animation: led 2.4s steps(1, end) infinite; animation-delay: var(--d, 0s); }
 @keyframes led { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
 @media (prefers-reduced-motion: reduce) { .mwlinks .led i.on { animation: none; } }
-@media (max-width: 440px) { .mwlinks { display: flex; width: 100%; } .mwlinks a { flex: 1 1 0; padding: 0 10px; gap: 7px; font-size: 14px; } .mwlinks a .ph-arrow-up-right { display: none; } }
+/* the one filled button in the scene: call the live demo. A handset on the same lamp grid, two waves ringing twice, then a rest */
+.mwcall { display: inline-flex; align-items: center; gap: 12px; height: 50px; padding: 0 22px 0 15px; border-radius: 999px; text-decoration: none;
+          background: var(--talks); color: #140c26; border: 1px solid var(--talks); white-space: nowrap; transition: background-color .3s, transform .2s var(--ease); }
+.mwcall:hover { background: #ad93ff; }
+.mwcall:active { transform: translateY(1px) scale(.99); }
+.mwcall .lbl { display: flex; flex-direction: column; line-height: 1.12; }
+.mwcall b { font: 600 15px var(--font); letter-spacing: -.005em; }
+.mwcall small { font: 500 12px var(--font); opacity: .82; margin-top: 2px; }
+.ledph { --off: rgba(20,12,38,.13); --on: #140c26; display: grid; gap: 1px; grid-template-columns: repeat(10, 3px); grid-auto-rows: 3px; }
+.ledph i { background: var(--off); border-radius: .5px; }
+.ledph i.on { background: var(--on); }
+.ledph i.w1 { animation: ring1 2.6s steps(1, end) infinite; }
+.ledph i.w2 { animation: ring2 2.6s steps(1, end) infinite; }
+@keyframes ring1 { 0% { background: var(--on); } 22% { background: var(--off); } 30% { background: var(--on); } 52%, 100% { background: var(--off); } }
+@keyframes ring2 { 0% { background: var(--off); } 11% { background: var(--on); } 22% { background: var(--off); } 41% { background: var(--on); } 52%, 100% { background: var(--off); } }
+@media (prefers-reduced-motion: reduce) { .ledph i.w1, .ledph i.w2 { background: var(--on); } }
+/* Aki, Mainway's mascot, perches on the button's top-left curve, leaning with it, legs over the edge: blinks now and then, hops when you point at the button */
+.mwcall { position: relative; }
+.actions:has(.mwcall) { margin-top: 36px; }
+.mwcall .aki { position: absolute; left: -9px; top: -17px; rotate: -40deg; transform-origin: 50% 100%; pointer-events: none; }
+.mwcall .aki .eye { transform-box: fill-box; transform-origin: bottom; animation: akiblink 4.2s steps(1, end) infinite; }
+.mwcall:hover .aki { animation: akihop .34s steps(1, end) 2; }
+@keyframes akiblink { 0%, 94% { transform: none; } 95%, 98% { transform: scaleY(.34); } }
+@keyframes akihop { 0% { transform: translateY(-3px); } 50% { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .mwcall .aki .eye, .mwcall:hover .aki { animation: none; } }
+@media (max-width: 440px) { .mwcall { display: flex; width: 100%; justify-content: center; }
+  .mwlinks { display: flex; width: 100%; } .mwlinks a { flex: 1 1 0; padding: 0 10px; gap: 7px; font-size: 14px; } .mwlinks a .ph-arrow-up-right { display: none; } }
+/* Mainway media: brisk's grid exactly (720 | 426). The call fills the big cell, the product page and the demo page are stacked beside it.
+   Stacked on narrow screens, the call is one column: a compact script on top, the diagram under it at full width */
+.mwmedia .call { margin-top: 0; border-radius: 10px; grid-template-columns: minmax(0, 1fr); }
+.mwmedia .call .script { display: grid; gap: 12px; padding: 18px 28px; border-right: 0; border-bottom: 1px solid #221f2b; }
+.mwmedia .turn { margin: 0; }
+.mwmedia .turn .t { font-size: 14.5px; line-height: 1.45; }
+@media (min-width: 560px) { .mwmedia .call .script { gap: 7px; } .mwmedia .turn { display: grid; grid-template-columns: 52px minmax(0, 1fr); align-items: baseline; } .mwmedia .turn .who { margin: 0; } }
+.mwmedia .call .ladder { padding: 20px 24px 14px 28px; }
+/* in brisk's big cell the call keeps brisk's 720 x 648 frame; it only grows when narrow widths wrap the script */
+@media (min-width: 900px) { .mwmedia .call { aspect-ratio: 720 / 648; overflow: clip; align-content: start; } }
+/* phones: the bar can't hold the title, the clock and the button in one row, so the title gets its own row
+   and the button sits under it, the clock (REC appears on its left while playing) on the right */
+@media (max-width: 599px) {
+  .mwmedia .callbar { row-gap: 10px; padding: 14px 16px 14px 22px; }
+  .mwmedia .callbar h4 { flex: 1 0 100%; margin: 0 0 0 6px; }
+  .mwmedia .recbtn { order: 1; }
+  .mwmedia .ctime { order: 2; margin-left: auto; }
+}
+.shot > a { display: block; border-radius: 10px; }
+.shot > a img { transition: box-shadow .3s; }
+.shot > a:hover img { box-shadow: 0 0 0 1px var(--talks), 0 30px 60px -30px var(--drop); }
+/* phones: the diagram keeps a readable size and scrolls sideways inside the card */
+.swipe { display: none; }
+@media (max-width: 700px) {
+  .call .script { border-right: 0; border-bottom: 1px solid #221f2b; }
+  .call .ladder { min-width: 0; overflow-x: auto; overscroll-behavior-x: contain; padding-right: 18px; scrollbar-width: thin; scrollbar-color: #3a3548 transparent; }
+  .call .ladder svg { width: 660px; max-width: none; }
+  .swipe { display: flex; align-items: center; gap: 8px; margin: 0; padding: 0 26px 16px; font: 500 12.5px "Space Grotesk"; color: #8b879a; }
+}
 .btn.talks { background: var(--talks); border-color: var(--talks); color: #140c26; }
 .btn.talks:hover { background: transparent; color: var(--fg); }
 
@@ -375,7 +429,7 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
     <canvas id="wave" aria-hidden="true"></canvas>
     <div class="wrap">
       <ol class="tracks" id="tracks">
-        <li><a class="trk" href="#mainway" data-k="talks"><span class="n">1</span><span class="nm"><img src="/files/icon-mainway.svg" alt="">Mainway</span><canvas data-mini="talks"></canvas><span class="st">Case study and engineering notes<i class="ph ph-arrow-up-right"></i></span></a></li>
+        <li><a class="trk" href="#mainway" data-k="talks"><span class="n">1</span><span class="nm"><img src="/files/icon-mainway.svg" alt="">Mainway</span><canvas data-mini="talks"></canvas><span class="st">Live demo: call it in your browser<i class="ph ph-arrow-up-right"></i></span></a></li>
         <li><a class="trk" href="#brisk" data-k="tidies"><span class="n">2</span><span class="nm"><img src="/files/icon-brisk.svg" alt="">brisk</span><canvas data-mini="tidies"></canvas><span class="st">Free on GitHub<i class="ph ph-arrow-up-right"></i></span></a></li>
         <li><a class="trk" href="#booksy" data-k="books"><span class="n">3</span><span class="nm"><img src="/files/icon-booksy.svg" alt="">Booksy TR</span><canvas data-mini="books"></canvas><span class="st">In development<i class="ph ph-arrow-up-right"></i></span></a></li>
         <li><a class="trk" href="#redteam" data-k="breaks"><span class="n">4</span><span class="nm"><img src="/files/icon-redteam.svg" alt="">Red team agent</span><canvas data-mini="breaks"></canvas><span class="st">In development<i class="ph ph-arrow-up-right"></i></span></a></li>
@@ -388,63 +442,70 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
     <div class="wrap">
       <p class="trackline rv"><canvas data-mini="talks" data-small></canvas><b>Track 1</b>Tested on 150+ real calls</p>
       <h2 class="title rv"><img src="/files/icon-mainway.svg" alt="">Mainway</h2>
-      <p class="stand rv">An AI receptionist for clinics in Turkey. It answers in Turkish, books the appointment, and stops talking the moment you cut in.</p>
-      <div class="call rv" id="call">
-        <div class="callbar">
-          <h4>A call to Mainway Dental</h4>
-          <span class="ctime"><b>REC</b><span id="callT">00:00</span><span class="speed" title="Played at 1.5 times the real speed">1.5×</span></span>
-          <button class="recbtn" id="callRec" type="button" aria-label="Play the call">
-            <span class="lens" aria-hidden="true"><svg viewBox="0 0 34 34"><circle class="ring" cx="17" cy="17" r="15"/><circle class="prog" cx="17" cy="17" r="15"/></svg><i></i></span>
-            <span id="callRecLbl">Play call</span>
-          </button>
-        </div>
-        <div class="script">
-          <div class="turn agent" id="tr1"><div class="who">Aki</div><div class="t">Mainway Dental, this is Aki. How can I help?</div></div>
-          <div class="turn caller" id="tr2"><div class="who">Caller</div><div class="t">Do you have anything free on Thursday afternoon?</div></div>
-          <div class="turn agent" id="tr3"><div class="who">Aki</div><div class="t">Thursday at 15:30 with Dr. Kaya is open. <span class="lost">Shall I book it for</span></div></div>
-          <div class="turn caller" id="tr4"><div class="who">Caller</div><div class="t">Anything earlier?</div></div>
-          <div class="turn agent" id="tr5"><div class="who">Aki</div><div class="t">13:00 is free too. Shall I book that one?</div></div>
-        </div>
-        <div class="ladder">
-          <svg viewBox="0 0 700 470" role="img" aria-label="What happens underneath the call">
-            <defs>
-              <marker id="a-caller" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#f1c48b"/></marker>
-              <marker id="a-agent" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#c3adff"/></marker>
-              <marker id="a-sys" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#a9a4b8"/></marker>
-              <marker id="a-cut" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#ff5ad8"/></marker>
-            </defs>
-            <g text-anchor="middle">
-              <text class="lane" x="110" y="18">Caller</text>
-              <text class="lane" x="230" y="18">Phone line</text><text class="tech" x="230" y="34">Asterisk, SIP</text>
-              <text class="lane" x="370" y="18">Mainway</text><text class="tech" x="370" y="34">Node.js, speech to text</text>
-              <text class="lane" x="510" y="18">Claude</text><text class="tech" x="510" y="34">3 fallbacks</text>
-              <text class="lane" x="640" y="18">Voice</text><text class="tech" x="640" y="34">ElevenLabs</text>
-            </g>
-            <line class="life" x1="110" y1="46" x2="110" y2="466"/><line class="life" x1="230" y1="46" x2="230" y2="466"/><line class="life" x1="370" y1="46" x2="370" y2="466"/><line class="life" x1="510" y1="46" x2="510" y2="466"/><line class="life" x1="640" y1="46" x2="640" y2="466"/>
-            <g class="m" data-at="0.3" data-turn="tr1" style="--len:260"><text class="tm" x="0" y="74">0.3 s</text><line class="k-agent" x1="370" y1="70" x2="114" y2="70" marker-end="url(#a-agent)"/><text class="k-agent" x="240" y="62" text-anchor="middle">greeting, already cached</text></g>
-            <g class="m" data-at="2.0" data-turn="tr2" style="--len:260"><text class="tm" x="0" y="120">2.0 s</text><line class="k-caller" x1="110" y1="116" x2="366" y2="116" marker-end="url(#a-caller)"/><text class="k-caller" x="240" y="108" text-anchor="middle">“anything Thursday afternoon?”</text></g>
-            <g class="m" data-at="3.6" style="--len:0"><text class="tm" x="0" y="156">3.6 s</text><rect class="act" x="362" y="126" width="16" height="34" rx="3"/><text class="note" x="386" y="150">0.8 s of silence: your turn is over</text></g>
-            <g class="m" data-at="3.6" style="--len:140"><text class="tm" x="0" y="194">3.6 s</text><line class="k-sys" x1="370" y1="190" x2="506" y2="190" marker-end="url(#a-sys)"/><text class="k-sys" x="440" y="182" text-anchor="middle">transcript + clinic info</text></g>
-            <g class="m" data-at="4.0" style="--len:140"><text class="tm" x="0" y="230">4.0 s</text><line class="k-agent" x1="510" y1="226" x2="374" y2="226" marker-end="url(#a-agent)"/><text class="k-agent" x="440" y="218" text-anchor="middle">first sentence, streamed</text></g>
-            <g class="m" data-at="4.0" style="--len:270"><line class="k-sys" x1="370" y1="242" x2="636" y2="242" marker-end="url(#a-sys)"/><text class="k-sys" x="575" y="258" text-anchor="middle">speak this</text></g>
-            <g class="m" data-at="4.3" data-turn="tr3" style="--len:530"><text class="tm" x="0" y="294">4.3 s</text><line class="k-agent" x1="640" y1="290" x2="114" y2="290" marker-end="url(#a-agent)"/><text class="k-agent" x="300" y="282" text-anchor="middle">“15:30 with Dr. Kaya is open…”</text></g>
-            <g class="m" data-at="5.4" data-turn="tr4" style="--len:260"><text class="tm" x="0" y="340">5.4 s</text><line class="k-caller" x1="110" y1="336" x2="366" y2="336" marker-end="url(#a-caller)"/><text class="k-caller" x="240" y="328" text-anchor="middle">“anything earlier?”</text></g>
-            <g class="m" data-at="5.5" data-cut="1" style="--len:140"><text class="tm" x="0" y="378">5.5 s</text><line class="k-cut" x1="370" y1="374" x2="234" y2="374" marker-end="url(#a-cut)"/><text class="k-cut" x="302" y="366" text-anchor="middle">stop playback</text><text class="note" x="386" y="378">you cut in, Aki stops</text></g>
-            <g class="m" data-at="7.1" data-turn="tr5" style="--len:260"><text class="tm" x="0" y="428">7.1 s</text><line class="k-agent" x1="370" y1="424" x2="114" y2="424" marker-end="url(#a-agent)"/><text class="k-agent" x="240" y="416" text-anchor="middle">“13:00 is free too…”</text></g>
-          </svg>
-        </div>
-      </div>
-      <p class="cap">A test call, drawn as it happens.</p>
+      <p class="stand rv">An AI receptionist that picks up in Turkish or English, puts nervous callers at ease, books the appointment, and stops talking the moment you cut in.</p>
       <div class="story">
         <div class="rv">
           <div class="cols">
-            <p>I built every layer alone. Calls arrive over SIP through Asterisk, twenty milliseconds of audio at a time. Speech-to-text runs while you are still talking, Claude writes the answer one sentence at a time, and ElevenLabs starts on the first sentence before the second one exists. If Claude is slow, three other models are waiting.</p>
-            <p>It ran on a real Turkish phone number until the server lease ended in October 2026. A browser demo is being built; until then, its own site walks through a call down to the millisecond.</p>
+            <p>Calls arrive over SIP through Asterisk, twenty milliseconds of audio at a time. Speech-to-text runs while the caller is still talking, Claude Haiku writes the reply one sentence at a time, and ElevenLabs starts speaking the first sentence before the second one exists. No model is a single point of failure: if Haiku stalls, the call moves on to GPT-4o, then Gemini, then Llama.</p>
+            <p>Alongside every reply, a second model scores how the caller sounds. A nervous first-timer gets reassurance before any question about times; a caller who is getting angry is handed over to staff. It ran on a real Turkish phone number and took more than 150 test calls until the server lease ended in October 2026. Today it runs in your browser: pick a business and talk to Aki.</p>
           </div>
-          <div class="actions"><nav class="mwlinks" aria-label="Mainway's own site"><a class="mw-p" href="https://mainway.mert.digital/" data-mw="/" target="_blank" rel="noopener"><img src="/files/icon-mainway.svg" alt="">Product page<i class="ph ph-arrow-up-right"></i></a><a class="mw-e" href="https://mainway.mert.digital/engineering/" data-mw="/engineering/" target="_blank" rel="noopener"><span class="led" aria-hidden="true"><i></i><i></i><i></i><i class="on" style="--d:.6s"></i><i></i><i></i><i class="on" style="--d:1.2s"></i><i></i><i class="on" style="--d:.6s"></i><i></i><i class="on"></i><i class="on" style="--d:1.2s"></i><i class="on" style="--d:1.8s"></i><i class="on" style="--d:.6s"></i><i></i><i class="on"></i><i class="on" style="--d:1.2s"></i><i class="on" style="--d:1.8s"></i><i class="on" style="--d:.6s"></i><i class="on" style="--d:2.4s"></i></span>How it’s built<i class="ph ph-arrow-up-right"></i></a></nav></div>
+          <div class="actions"><a class="mwcall" href="https://mainway.mert.digital/engineering/?lang=en#demo" data-mw="/engineering/?lang=en#demo" target="_blank" rel="noopener"><svg class="aki" viewBox="0 0 14 9" width="42" height="27" shape-rendering="crispEdges" aria-hidden="true"><rect x="4" y="0" width="6" height="1" fill="#6a2fb0"/><rect x="2" y="1" width="1" height="1" fill="#6a2fb0"/><rect x="11" y="1" width="1" height="1" fill="#6a2fb0"/><rect x="1" y="2" width="1" height="1" fill="#6a2fb0"/><rect x="2" y="2" width="1" height="1" fill="#a774e6"/><rect x="3" y="2" width="9" height="1" fill="#cc97ff"/><rect x="12" y="2" width="1" height="1" fill="#6a2fb0"/><rect x="1" y="3" width="1" height="1" fill="#6a2fb0"/><rect x="2" y="3" width="1" height="1" fill="#a774e6"/><rect x="3" y="3" width="1" height="1" fill="#cc97ff"/><rect class="eye" x="4" y="3" width="1" height="1" fill="#1b0a30"/><rect x="5" y="3" width="4" height="1" fill="#cc97ff"/><rect class="eye" x="9" y="3" width="1" height="1" fill="#1b0a30"/><rect x="10" y="3" width="2" height="1" fill="#cc97ff"/><rect x="12" y="3" width="1" height="1" fill="#6a2fb0"/><rect x="0" y="4" width="2" height="1" fill="#cc97ff"/><rect x="2" y="4" width="1" height="1" fill="#a774e6"/><rect x="3" y="4" width="11" height="1" fill="#cc97ff"/><rect x="2" y="5" width="1" height="1" fill="#a774e6"/><rect x="3" y="5" width="9" height="1" fill="#cc97ff"/><rect x="2" y="6" width="1" height="1" fill="#a774e6"/><rect x="3" y="6" width="9" height="1" fill="#cc97ff"/><rect x="3" y="7" width="1" height="1" fill="#cc97ff"/><rect x="5" y="7" width="1" height="1" fill="#cc97ff"/><rect x="8" y="7" width="1" height="1" fill="#cc97ff"/><rect x="10" y="7" width="1" height="1" fill="#cc97ff"/><rect x="3" y="8" width="1" height="1" fill="#cc97ff"/><rect x="5" y="8" width="1" height="1" fill="#cc97ff"/><rect x="8" y="8" width="1" height="1" fill="#cc97ff"/><rect x="10" y="8" width="1" height="1" fill="#cc97ff"/></svg><span class="ledph" aria-hidden="true"><i></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i class="w2"></i><i class="w2"></i><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="w1"></i><i></i><i></i><i class="w2"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i class="w1"></i><i></i><i></i><i class="w2"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i class="w1"></i><i></i><i></i><i class="w2"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span><span class="lbl"><b>Call Aki now</b><small>free · 3 min · in your browser</small></span></a><nav class="mwlinks" aria-label="Mainway's own site"><a class="mw-p" href="https://mainway.mert.digital/?lang=en" data-mw="/?lang=en" target="_blank" rel="noopener"><img src="/files/icon-mainway.svg" alt="">Product page<i class="ph ph-arrow-up-right"></i></a><a class="mw-e" href="https://mainway.mert.digital/engineering/?lang=en" data-mw="/engineering/?lang=en" target="_blank" rel="noopener"><span class="led" aria-hidden="true"><i></i><i></i><i></i><i class="on" style="--d:.6s"></i><i></i><i></i><i class="on" style="--d:1.2s"></i><i></i><i class="on" style="--d:.6s"></i><i></i><i class="on"></i><i class="on" style="--d:1.2s"></i><i class="on" style="--d:1.8s"></i><i class="on" style="--d:.6s"></i><i></i><i class="on"></i><i class="on" style="--d:1.2s"></i><i class="on" style="--d:1.8s"></i><i class="on" style="--d:.6s"></i><i class="on" style="--d:2.4s"></i></span>How it’s built<i class="ph ph-arrow-up-right"></i></a></nav></div>
           <ul class="tags"><li>Node.js</li><li>PostgreSQL</li><li>Asterisk</li><li>Twilio</li><li>Claude API</li><li>ElevenLabs</li><li>Docker</li></ul>
         </div>
         <blockquote class="pull rv" style="--c: var(--talks)">The hard part wasn’t the AI. It was knowing when someone has finished talking.</blockquote>
+      </div>
+      <div class="media bento mwmedia">
+        <figure class="shot lead rv">
+        <div class="call" id="call">
+          <div class="callbar">
+            <h4>A call to Mainway Dental</h4>
+            <span class="ctime"><b>REC</b><span id="callT">00:00</span><span class="speed" title="Played at 1.5 times the real speed">1.5×</span></span>
+            <button class="recbtn" id="callRec" type="button" aria-label="Play the call">
+              <span class="lens" aria-hidden="true"><svg viewBox="0 0 34 34"><circle class="ring" cx="17" cy="17" r="15"/><circle class="prog" cx="17" cy="17" r="15"/></svg><i></i></span>
+              <span id="callRecLbl">Play call</span>
+            </button>
+          </div>
+          <div class="script">
+            <div class="turn agent" id="tr1"><div class="who">Aki</div><div class="t">Mainway Dental, this is Aki. How can I help?</div></div>
+            <div class="turn caller" id="tr2"><div class="who">Caller</div><div class="t">Do you have anything free on Thursday afternoon?</div></div>
+            <div class="turn agent" id="tr3"><div class="who">Aki</div><div class="t">Thursday at 15:30 with Dr. Kaya is open. <span class="lost">Shall I book it for</span></div></div>
+            <div class="turn caller" id="tr4"><div class="who">Caller</div><div class="t">Anything earlier?</div></div>
+            <div class="turn agent" id="tr5"><div class="who">Aki</div><div class="t">13:00 is free too. Shall I book that one?</div></div>
+          </div>
+          <p class="swipe" aria-hidden="true"><i class="ph ph-arrows-horizontal"></i>Swipe to follow the whole call</p>
+          <div class="ladder">
+            <svg viewBox="0 0 700 386" role="img" aria-label="What happens underneath the call">
+              <defs>
+                <marker id="a-caller" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#f1c48b"/></marker>
+                <marker id="a-agent" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#c3adff"/></marker>
+                <marker id="a-sys" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#a9a4b8"/></marker>
+                <marker id="a-cut" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#ff5ad8"/></marker>
+              </defs>
+              <g text-anchor="middle">
+                <text class="lane" x="110" y="18">Caller</text>
+                <text class="lane" x="230" y="18">Phone line</text><text class="tech" x="230" y="34">Asterisk, SIP</text>
+                <text class="lane" x="370" y="18">Mainway</text><text class="tech" x="370" y="34">Node.js, speech to text</text>
+                <text class="lane" x="510" y="18">Claude</text><text class="tech" x="510" y="34">3 fallbacks</text>
+                <text class="lane" x="640" y="18">Voice</text><text class="tech" x="640" y="34">ElevenLabs</text>
+              </g>
+              <line class="life" x1="110" y1="46" x2="110" y2="382"/><line class="life" x1="230" y1="46" x2="230" y2="382"/><line class="life" x1="370" y1="46" x2="370" y2="382"/><line class="life" x1="510" y1="46" x2="510" y2="382"/><line class="life" x1="640" y1="46" x2="640" y2="382"/>
+              <g class="m" data-at="0.3" data-turn="tr1" style="--len:260"><text class="tm" x="0" y="69">0.3 s</text><line class="k-agent" x1="370" y1="65" x2="114" y2="65" marker-end="url(#a-agent)"/><text class="k-agent" x="240" y="57" text-anchor="middle">greeting, already cached</text></g>
+              <g class="m" data-at="2.0" data-turn="tr2" style="--len:260"><text class="tm" x="0" y="106">2.0 s</text><line class="k-caller" x1="110" y1="102" x2="366" y2="102" marker-end="url(#a-caller)"/><text class="k-caller" x="240" y="94" text-anchor="middle">“anything Thursday afternoon?”</text></g>
+              <g class="m" data-at="3.6" style="--len:0"><text class="tm" x="0" y="134">3.6 s</text><rect class="act" x="362" y="110" width="16" height="28" rx="3"/><text class="note" x="386" y="130">0.8 s of silence: your turn is over</text></g>
+              <g class="m" data-at="3.6" style="--len:140"><text class="tm" x="0" y="165">3.6 s</text><line class="k-sys" x1="370" y1="161" x2="506" y2="161" marker-end="url(#a-sys)"/><text class="k-sys" x="440" y="153" text-anchor="middle">transcript + clinic info</text></g>
+              <g class="m" data-at="4.0" style="--len:140"><text class="tm" x="0" y="194">4.0 s</text><line class="k-agent" x1="510" y1="190" x2="374" y2="190" marker-end="url(#a-agent)"/><text class="k-agent" x="440" y="182" text-anchor="middle">first sentence, streamed</text></g>
+              <g class="m" data-at="4.0" style="--len:270"><line class="k-sys" x1="370" y1="203" x2="636" y2="203" marker-end="url(#a-sys)"/><text class="k-sys" x="575" y="219" text-anchor="middle">speak this</text></g>
+              <g class="m" data-at="4.3" data-turn="tr3" style="--len:530"><text class="tm" x="0" y="245">4.3 s</text><line class="k-agent" x1="640" y1="241" x2="114" y2="241" marker-end="url(#a-agent)"/><text class="k-agent" x="300" y="233" text-anchor="middle">“15:30 with Dr. Kaya is open…”</text></g>
+              <g class="m" data-at="5.4" data-turn="tr4" style="--len:260"><text class="tm" x="0" y="282">5.4 s</text><line class="k-caller" x1="110" y1="278" x2="366" y2="278" marker-end="url(#a-caller)"/><text class="k-caller" x="240" y="270" text-anchor="middle">“anything earlier?”</text></g>
+              <g class="m" data-at="5.5" data-cut="1" style="--len:140"><text class="tm" x="0" y="312">5.5 s</text><line class="k-cut" x1="370" y1="308" x2="234" y2="308" marker-end="url(#a-cut)"/><text class="k-cut" x="302" y="300" text-anchor="middle">stop playback</text><text class="note" x="386" y="312">you cut in, Aki stops</text></g>
+              <g class="m" data-at="7.1" data-turn="tr5" style="--len:260"><text class="tm" x="0" y="352">7.1 s</text><line class="k-agent" x1="370" y1="348" x2="114" y2="348" marker-end="url(#a-agent)"/><text class="k-agent" x="240" y="340" text-anchor="middle">“13:00 is free too…”</text></g>
+            </svg>
+          </div>
+        </div>
+          <figcaption>A test call, drawn as it happens.</figcaption>
+        </figure>
+        <figure class="shot rv"><a href="https://mainway.mert.digital/?lang=en" data-mw="/?lang=en" target="_blank" rel="noopener"><img src="/files/mainway-landing.webp" width="1500" height="1020" loading="lazy" decoding="async" alt="Mainway’s product page: Every call answered, every appointment booked, beside a finished call that ends with the booking"></a><figcaption>Product page: the pitch, written for clinic owners.</figcaption></figure>
+        <figure class="shot rv"><a href="https://mainway.mert.digital/engineering/?lang=en#demo" data-mw="/engineering/?lang=en#demo" target="_blank" rel="noopener"><img src="/files/mainway-demo.webp" width="1500" height="1020" loading="lazy" decoding="async" alt="The live demo panel: the data a dental clinic uploaded, the businesses to pick from, a Start a call button and the engine timings"></a><figcaption>Live demo: pick a business, press Start a call, talk.</figcaption></figure>
       </div>
     </div>
   </section>
