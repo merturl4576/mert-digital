@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mert Ural</title>
-<meta name="description" content="Mert Ural builds software that talks, tidies, books and breaks in: Mainway, brisk, Booksy TR and a red team agent.">
+<meta name="description" content="Mert Ural builds software that talks, tidies, books and breaks in: Mainway, brisk, sıradaki and a red team agent.">
 <link rel="icon" type="image/svg+xml" href="/files/icon-mainway.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -260,7 +260,7 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
 .bento { display: grid; grid-template-columns: 1fr; gap: 22px; }
 @media (min-width: 900px) { .bento { grid-template-columns: minmax(0, 720fr) minmax(0, 426fr); align-items: start; } .bento .lead { grid-row: span 2; } }
 
-/* Booksy scene: an App Store row that fits the grid; it scrolls sideways only on narrow screens */
+/* sıradaki scene: an App Store row that fits the grid; it scrolls sideways only on narrow screens */
 .strip { display: grid; grid-auto-flow: column; grid-auto-columns: 220px; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; scrollbar-width: none; }
 @media (min-width: 1000px) { .strip { grid-auto-flow: row; grid-template-columns: repeat(5, minmax(0, 1fr)); overflow: visible; } }
 .strip::-webkit-scrollbar { display: none; }
@@ -431,7 +431,7 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
       <ol class="tracks" id="tracks">
         <li><a class="trk" href="#mainway" data-k="talks"><span class="n">1</span><span class="nm"><img src="/files/icon-mainway.svg" alt="">Mainway</span><canvas data-mini="talks"></canvas><span class="st">Live demo: call it in your browser<i class="ph ph-arrow-up-right"></i></span></a></li>
         <li><a class="trk" href="#brisk" data-k="tidies"><span class="n">2</span><span class="nm"><img src="/files/icon-brisk.svg" alt="">brisk</span><canvas data-mini="tidies"></canvas><span class="st">Free on GitHub<i class="ph ph-arrow-up-right"></i></span></a></li>
-        <li><a class="trk" href="#booksy" data-k="books"><span class="n">3</span><span class="nm"><img src="/files/icon-booksy.svg" alt="">Booksy TR</span><canvas data-mini="books"></canvas><span class="st">In development<i class="ph ph-arrow-up-right"></i></span></a></li>
+        <li><a class="trk" href="#siradaki" data-k="books"><span class="n">3</span><span class="nm"><img src="/files/icon-siradaki.svg" alt="">sıradaki</span><canvas data-mini="books"></canvas><span class="st">In development<i class="ph ph-arrow-up-right"></i></span></a></li>
         <li><a class="trk" href="#redteam" data-k="breaks"><span class="n">4</span><span class="nm"><img src="/files/icon-redteam.svg" alt="">Red team agent</span><canvas data-mini="breaks"></canvas><span class="st">In development<i class="ph ph-arrow-up-right"></i></span></a></li>
       </ol>
     </div>
@@ -536,17 +536,17 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
     </div>
   </section>
 
-  <!-- TRACK 3: BOOKSY TR -->
-  <section class="scene paper project" id="booksy" data-track="books">
+  <!-- TRACK 3: SIRADAKI -->
+  <section class="scene paper project" id="siradaki" data-track="books">
     <div class="wrap">
       <p class="trackline rv"><canvas data-mini="books" data-small></canvas><b>Track 3</b>In development, iOS and Android</p>
-      <h2 class="title rv"><img src="/files/icon-booksy.svg" alt="">Booksy TR</h2>
+      <h2 class="title rv"><img src="/files/icon-siradaki.svg" alt="">sıradaki</h2>
       <p class="stand rv">Booking for barbers, hairdressers, nail and massage salons in Turkey. You find a free slot today; the shop sees its whole day on one screen.</p>
       <div class="story">
         <div class="rv">
           <div class="cols">
             <p>Two apps on one Supabase backend, one for customers and one for the shop. It began as a clickable prototype: filmed salon scenes behind the search, a headline word that changes with each scene, and a calendar that flags first-time customers so the shop can greet them properly.</p>
-            <p>Now it is moving into Expo, one screen at a time. The working name is sıradaki, “who’s next”. If you want to click through the prototype, ask me and I’ll send the link.</p>
+            <p>Now it is moving into Expo, one screen at a time. The name means “who’s next” in Turkish. If you want to click through the prototype, ask me and I’ll send the link.</p>
           </div>
           <ul class="tags"><li>TypeScript</li><li>React Native</li><li>Expo</li><li>Supabase</li><li>Postgres</li></ul>
         </div>
@@ -555,10 +555,10 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
       <div class="media">
       <div class="strip rv" tabindex="0" aria-label="Screens from the prototype">
       <div class="panel" style="background:#0b5e5b;color:#fff">
-        <span class="brand"><img src="/files/icon-booksy.svg" alt="">sıradaki</span>
+        <span class="brand"><img src="/files/icon-siradaki.svg" alt="">sıradaki</span>
         <h5 style="margin-top:26px">Bugün <em style="color:#ffb59c">saçına</em> bir saat ayır.</h5>
         <p>Berber, kuaför, tırnak, masaj. Yakınındaki boş saatler tek yerde.</p>
-        <div class="phone"><div class="scr"><div class="vid" style="background-image:url(/files/booksy-kuafor.jpg)"><b>Bugün saçına bir saat ayır</b><div class="s">Berber, kuaför, tırnak…</div></div><div class="pad"><div class="h">Bugün boş saatler</div><div class="sl"><span>12:45</span><span class="f">İlk ziyaret</span><span>17:30</span></div></div></div></div>
+        <div class="phone"><div class="scr"><div class="vid" style="background-image:url(/files/siradaki-kuafor.jpg)"><b>Bugün saçına bir saat ayır</b><div class="s">Berber, kuaför, tırnak…</div></div><div class="pad"><div class="h">Bugün boş saatler</div><div class="sl"><span>12:45</span><span class="f">İlk ziyaret</span><span>17:30</span></div></div></div></div>
       </div>
       <div class="panel" style="background:#fff;color:#15171c">
         <span class="lbl" style="color:#ff6a3d">Keşfet</span>
