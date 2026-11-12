@@ -252,7 +252,7 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
 .btn.talks { background: var(--talks); border-color: var(--talks); color: #140c26; }
 .btn.talks:hover { background: transparent; color: var(--fg); }
 
-/* brisk scene: the demo at its own size, two read-back screens stacked beside it */
+/* brisk scene: the demo in the big cell (720 x 648, the wide app centred on a blurred copy of itself), two pages stacked beside it */
 .term { display: flex; align-items: center; margin-top: 4px; border: 1px solid var(--hair); border-radius: 999px; overflow: hidden; height: 44px; max-width: 640px; }
 .term code { flex: 1; min-width: 0; padding: 0 18px; white-space: nowrap; overflow: hidden; font: 500 13.5px "Geist", ui-monospace, monospace; color: var(--fg-body); -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent); mask-image: linear-gradient(90deg, #000 82%, transparent); }
 .term button { height: 100%; padding: 0 18px; border: 0; border-left: 1px solid var(--hair); background: transparent; color: var(--fg); font: 500 14px var(--font); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
@@ -515,23 +515,23 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
     <div class="wrap">
       <p class="trackline rv"><canvas data-mini="tidies" data-small></canvas><b>Track 2</b>Out now, open source</p>
       <h2 class="title rv"><img src="/files/icon-brisk.svg" alt="">brisk</h2>
-      <p class="stand rv">A free Windows cleaner that tells you why your PC is slow, and refuses to claim anything it didn’t measure.</p>
+      <p class="stand rv">A free Windows cleaner that finds what slows your PC down, fixes it in one click, and refuses to claim anything it didn’t measure.</p>
       <div class="story">
         <div class="rv">
           <div class="cols">
-            <p>I wanted a cleaner I could trust. Every diagnosis is a rule you can read in the source, and every finding carries the evidence it was built from. It only touches an allowlist, every change can be undone, and there is no telemetry, no account and no AI inside.</p>
-            <p>Days later it reads its own changes back, to check Windows didn’t quietly undo them. 171 tests keep it honest. One line to install:</p>
+            <p>I wanted a cleaner I could trust. Every diagnosis is a rule you can read in the source, and every finding carries the evidence it was built from. It only touches an allowlist, every setting it changes can be undone, and there is no telemetry, no account and no AI inside.</p>
+            <p>After every run it reads its own changes back, to check Windows didn’t quietly undo them. 1,788 tests keep it honest. One line to install:</p>
           </div>
           <div class="term"><code>irm https://raw.githubusercontent.com/merturl4576/brisk/main/get.ps1 | iex</code><button type="button" data-copy="irm https://raw.githubusercontent.com/merturl4576/brisk/main/get.ps1 | iex"><i class="ph ph-copy"></i>Copy</button></div>
-          <div class="actions"><a class="btn primary" href="https://github.com/merturl4576/brisk" target="_blank" rel="noopener"><i class="ph ph-github-logo"></i>View on GitHub</a><a class="btn" href="https://github.com/merturl4576/brisk/releases/tag/v0.9.0" target="_blank" rel="noopener"><i class="ph ph-download-simple"></i>Download v0.9</a></div>
+          <div class="actions"><a class="btn primary" href="https://github.com/merturl4576/brisk" target="_blank" rel="noopener"><i class="ph ph-github-logo"></i>View on GitHub</a><a class="btn" href="https://github.com/merturl4576/brisk/releases/tag/v0.11.0" target="_blank" rel="noopener"><i class="ph ph-download-simple"></i>Download v0.11</a></div>
           <ul class="tags"><li>C#</li><li>.NET 8</li><li>WPF</li><li>PowerShell</li></ul>
         </div>
         <blockquote class="pull rv" style="--c: var(--tidies)">If brisk can’t measure it, brisk doesn’t say it.</blockquote>
       </div>
       <div class="media bento">
-        <figure class="shot lead rv"><video id="briskDemo" src="/files/brisk-demo.mp4" poster="/files/brisk-demo-poster.webp" width="720" height="648" muted loop playsinline preload="none" aria-label="brisk: one scan, one click, the health score goes from 53 to 86"></video><figcaption>One scan, one click. The health score goes from 53 to 86.</figcaption></figure>
-        <figure class="shot rv"><img src="/files/brisk-privacy-readback.png" width="1500" height="1020" loading="lazy" decoding="async" alt="The Privacy page with its read-back band"><figcaption>Privacy: counts, never contents.</figcaption></figure>
-        <figure class="shot rv"><img src="/files/brisk-performance-readback.png" width="1500" height="1020" loading="lazy" decoding="async" alt="The Performance page"><figcaption>Performance: every number says where it came from.</figcaption></figure>
+        <figure class="shot lead rv"><video id="briskDemo" src="/files/brisk-demo.mp4" poster="/files/brisk-demo-poster.webp" width="1320" height="1188" muted loop playsinline preload="none" aria-label="brisk: Home with live CPU, graphics and memory gauges, then Free up space moving from MIN to MAX, then Speed up and Privacy counting what they will change"></video><figcaption>Home watches the machine live. Each page counts what one click will change.</figcaption></figure>
+        <figure class="shot rv"><img src="/files/brisk-free-up-space.webp" width="1320" height="898" loading="lazy" decoding="async" alt="Free up space: 117 GB can be freed at MAX, the rows it will delete with their level, and the MIN, MID and MAX tiles with what each one costs"><figcaption>Free up space: MIN, MID or MAX, with the cost of each on screen.</figcaption></figure>
+        <figure class="shot rv"><img src="/files/brisk-speed-up.webp" width="1320" height="898" loading="lazy" decoding="async" alt="Speed up: 11 changes, the startup programs it will stop, the ones it leaves alone with the reason, and switches you can add"><figcaption>Speed up: startup programs off, the ones you’d miss left alone.</figcaption></figure>
       </div>
     </div>
   </section>
