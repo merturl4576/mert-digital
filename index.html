@@ -96,7 +96,7 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
 .trk .st { font-size: 14px; color: var(--fg-2); text-align: right; display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
 .trk .st .ph { transition: transform .3s var(--ease); }
 .trk:hover .st .ph, .trk:focus-visible .st .ph { transform: translate(3px, -3px); }
-@media (max-width: 860px) { .trk { grid-template-columns: 28px 1fr; } .trk canvas, .trk .st { grid-column: 2; text-align: left; justify-content: flex-start; } }
+@media (max-width: 860px) { .trk { grid-template-columns: 28px 1fr; } .trk canvas, .trk .st { grid-column: 2; text-align: left; justify-content: flex-start; } .trk .st { display: block; text-wrap: balance; } .trk .st .ph { display: inline-block; margin-left: 8px; } }
 
 /* ---------------- project scenes: one strict grid ----------------
    Title, one standfirst, then the story: reading text in two narrow columns with the pull quote beside it,
@@ -424,7 +424,7 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
     <div class="wrap">
       <ol class="tracks" id="tracks">
         <li><a class="trk" href="#mainway" data-k="talks"><span class="n">1</span><span class="nm"><img src="/files/icon-mainway.svg" alt="">Mainway</span><canvas data-mini="talks"></canvas><span class="st">Live demo: call it in your browser<i class="ph ph-arrow-up-right"></i></span></a></li>
-        <li><a class="trk" href="#redteam" data-k="breaks"><span class="n">2</span><span class="nm"><img src="/files/icon-gambit.svg" alt="">Gambit</span><canvas data-mini="breaks"></canvas><span class="st">In development<i class="ph ph-arrow-up-right"></i></span></a></li>
+        <li><a class="trk" href="#redteam" data-k="breaks"><span class="n">2</span><span class="nm"><img src="/files/icon-gambit.svg" alt="">Gambit</span><canvas data-mini="breaks"></canvas><span class="st">In use. Version 1.0 ships the day attackers retire.<i class="ph ph-arrow-up-right"></i></span></a></li>
         <li><a class="trk" href="#brisk" data-k="tidies"><span class="n">3</span><span class="nm"><img src="/files/icon-brisk.svg" alt="">brisk</span><canvas data-mini="tidies"></canvas><span class="st">Free on GitHub<i class="ph ph-arrow-up-right"></i></span></a></li>
         <li><a class="trk" href="#siradaki" data-k="books"><span class="n">4</span><span class="nm"><img src="/files/icon-siradaki.svg" alt="">sıradaki</span><canvas data-mini="books"></canvas><span class="st">In development<i class="ph ph-arrow-up-right"></i></span></a></li>
       </ol>
