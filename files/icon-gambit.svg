@@ -11,16 +11,16 @@
   </defs>
   <rect width="120" height="120" rx="27" fill="url(#bg)"/>
   <rect width="120" height="120" rx="27" fill="url(#lift)"/>
-  <g fill="none" stroke="#f2c230" stroke-width="5" stroke-linecap="round">
+  <g fill="none" stroke="#e5383b" stroke-width="5" stroke-linecap="round">
     <path d="M60 30 a30 30 0 0 1 30 30"/>
     <path d="M90 60 a30 30 0 0 1 -30 30" opacity=".35"/>
     <path d="M60 90 a30 30 0 0 1 -30 -30"/>
     <path d="M30 60 a30 30 0 0 1 30 -30" opacity=".35"/>
   </g>
-  <g stroke="#f2c230" stroke-width="5" stroke-linecap="round">
+  <g stroke="#e5383b" stroke-width="5" stroke-linecap="round">
     <line x1="60" y1="18" x2="60" y2="30"/><line x1="60" y1="90" x2="60" y2="102"/>
     <line x1="18" y1="60" x2="30" y2="60"/><line x1="90" y1="60" x2="102" y2="60"/>
   </g>
-  <circle cx="60" cy="60" r="6.5" fill="#f2c230"/>
+  <circle cx="60" cy="60" r="6.5" fill="#e5383b"/>
   <rect x=".75" y=".75" width="118.5" height="118.5" rx="26.4" fill="none" stroke="#ffffff" stroke-opacity=".10" stroke-width="1.5"/>
 </svg>

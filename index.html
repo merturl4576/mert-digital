@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mert Ural</title>
-<meta name="description" content="Mert Ural builds software that talks, tidies, books and breaks in: Mainway, brisk, sıradaki and a red team agent.">
+<meta name="description" content="Mert Ural builds software that talks, breaks in, tidies and books: Mainway, Gambit, brisk and sıradaki.">
 <link rel="icon" type="image/svg+xml" href="/files/icon-mainway.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,7 @@
   --bg: var(--night);
   --fg: var(--paper); --fg-body: #d2cec5; --fg-2: #a6a198; --fg-3: #75716a; --hair: rgba(235,231,222,.13);
   --ring: rgba(235,231,222,.1); --drop: rgba(0,0,0,.95);
-  --talks: #9b7cff; --tidies: #2fc6dc; --books: #ff6a3d; --breaks: #ebc23a;
+  --talks: #9b7cff; --tidies: #2fc6dc; --books: #ebc23a; --breaks: #e5383b;
   --ease: cubic-bezier(.16, 1, .3, 1);
 }
 .night { --bg: var(--night); background-color: var(--night); color: var(--fg); }
@@ -300,17 +300,8 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
 .scr .cal .r span { border-radius: 5px; padding: 3px 5px; background: #e6f1ef; color: #0b5e5b; font-weight: 700; }
 .scr .cal .r span.n { background: #ffede6; color: #ff6a3d; } .scr .cal .r span.e { background: transparent; }
 
-/* Red team scene: the rules, drawn */
-.flow { margin: clamp(44px, 4vw, 64px) 0 0; border-radius: 14px; padding: clamp(20px, 3vw, 36px); background: rgba(235,194,58,.05); box-shadow: inset 0 0 0 1px rgba(235,194,58,.18); }
-.flow svg { width: 100%; max-width: 760px; margin-inline: auto; height: auto; display: block; }
-.flow .box { fill: #17160f; stroke: rgba(236,235,232,.22); }
-.flow .gate { fill: rgba(235,194,58,.1); stroke: #ebc23a; }
-.flow text { font: 500 14px var(--font); fill: #ecebe8; }
-.flow .small { font: 400 12.5px var(--font); fill: #a3a3a6; }
-.flow .ok { stroke: #ecebe8; } .flow .no { stroke: #ff6b5e; stroke-dasharray: 4 5; }
-.flow .notext { fill: #ff8b80; font-size: 12.5px; }
-/* Red team findings: two paper slips taped onto the night scene. Paper is the site's second ink;
-   the heavier finding is the bigger slip and lies on top. Amber stays on the dot, the meter and the tape.
+/* Red team findings: two paper slips taped onto the scene. On night they are the site's paper; on paper they are a lighter sheet with a warm shadow;
+   the heavier finding is the bigger slip and lies on top. Gambit red stays on the dot, the meter and the tape.
    Slips tilt only where there's room for it, and straighten when you pick one up. */
 .finds { display: grid; grid-template-columns: minmax(0, 1fr); gap: 34px; margin-top: clamp(48px, 4.6vw, 72px); align-items: center; }
 @media (min-width: 1000px) { .finds { grid-template-columns: minmax(0, 1fr) minmax(0, 2.1fr); gap: 64px; align-items: start; } .finds .note { padding-top: 48px; } }
@@ -321,10 +312,11 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
         box-shadow: 0 1px 2px rgba(0,0,0,.45), 0 30px 60px -28px rgba(0,0,0,.95);
         transform: rotate(var(--tilt)); transition: transform .7s var(--ease), box-shadow .7s var(--ease); }
 .slip::before { content: ""; position: absolute; top: -13px; left: calc(50% - 48px); width: 96px; height: 26px; transform: rotate(-3deg);
-                background: linear-gradient(100deg, rgba(255,255,255,.12), rgba(255,255,255,0) 60%), rgba(226,192,96,.93);
+                background: linear-gradient(100deg, rgba(255,255,255,.12), rgba(255,255,255,0) 60%), rgba(214,58,62,.9);
                 clip-path: polygon(3% 0, 97% 0, 100% 22%, 96% 44%, 100% 66%, 96% 86%, 98% 100%, 2% 100%, 0 82%, 4% 62%, 0 40%, 4% 20%); }
 .slip.mid::before { left: auto; right: 22%; transform: rotate(4deg); }
 .slips.plain .slip::before { display: none; }
+.paper .slip { background: #faf8f3; box-shadow: 0 0 0 1px rgba(21,20,19,.07), 0 1px 2px rgba(44,34,22,.14), 0 30px 60px -28px rgba(44,34,22,.5); }
 @media (min-width: 760px) {
   .slips { flex-direction: row; align-items: flex-start; gap: 0; }
   .slip.hi { --tilt: -2.5deg; flex: 0 0 54%; z-index: 2; }
@@ -332,19 +324,20 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
 }
 @media (hover: hover) and (min-width: 760px) {
   .slip:hover { transform: rotate(0deg) translateY(-6px); z-index: 3; box-shadow: 0 1px 2px rgba(0,0,0,.45), 0 44px 70px -30px rgba(0,0,0,1); }
+  .paper .slip:hover { box-shadow: 0 0 0 1px rgba(21,20,19,.07), 0 1px 2px rgba(44,34,22,.16), 0 44px 70px -30px rgba(44,34,22,.62); }
 }
 .slip .who { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 11.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: #5e5a53; }
-.slip .who::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #c8960e; box-shadow: 0 0 0 3px rgba(200,150,14,.2); }
+.slip .who::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #c1121f; box-shadow: 0 0 0 3px rgba(193,18,31,.18); }
 .slip .score { display: flex; align-items: flex-end; gap: 14px; margin: 20px 0 0; }
 .slip .score b { font-size: clamp(54px, 4.6vw, 70px); font-weight: 500; line-height: .78; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
 .slip .score span { font-size: 12.5px; font-weight: 500; line-height: 1.3; color: #5e5a53; }
 .slip .meter { position: relative; height: 12px; margin-top: 18px; background: repeating-linear-gradient(90deg, rgba(21,20,19,.13) 0 2px, transparent 2px 5px); }
-.slip .meter::before { content: ""; position: absolute; inset: 0 auto 0 0; width: calc(var(--s) * 10%); background: repeating-linear-gradient(90deg, #c8960e 0 2px, transparent 2px 5px); }
+.slip .meter::before { content: ""; position: absolute; inset: 0 auto 0 0; width: calc(var(--s) * 10%); background: repeating-linear-gradient(90deg, #c1121f 0 2px, transparent 2px 5px); }
 .slip h3 { margin: 20px 0 0; font-size: 21px; font-weight: 600; line-height: 1.22; letter-spacing: -.02em; text-wrap: balance; }
 .slip .ctx { margin: 6px 0 0; font-size: 14.5px; line-height: 1.5; color: #5e5a53; }
 .slip .ids { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 18px 0 0; padding-top: 12px; border-top: 1px dashed rgba(21,20,19,.2); font-size: 12.5px; font-weight: 500; color: #6b675f; }
-.slip .ids a { color: #151413; text-decoration: underline; text-decoration-color: rgba(200,150,14,.7); text-underline-offset: 3px; }
-.slip .ids a:hover { text-decoration-color: #c8960e; }
+.slip .ids a { color: #151413; text-decoration: underline; text-decoration-color: rgba(193,18,31,.7); text-underline-offset: 3px; }
+.slip .ids a:hover { text-decoration-color: #c1121f; }
 .slip.mid .score b { font-size: clamp(46px, 3.8vw, 58px); }
 .slip.mid h3 { font-size: 19px; }
 
@@ -425,14 +418,14 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
 
   <!-- THE SENTENCE -->
   <section class="scene night sentence" id="sentence">
-    <div class="wrap"><p class="said rv" id="said">I build software that <span class="w" data-k="talks">talks</span>, <span class="w" data-k="tidies">tidies</span>, <span class="w" data-k="books">books</span> and <span class="w" data-k="breaks">breaks in</span>.</p></div>
+    <div class="wrap"><p class="said rv" id="said">I build software that <span class="w" data-k="talks">talks</span>, <span class="w" data-k="breaks">breaks in</span>, <span class="w" data-k="tidies">tidies</span> and <span class="w" data-k="books">books</span>.</p></div>
     <canvas id="wave" aria-hidden="true"></canvas>
     <div class="wrap">
       <ol class="tracks" id="tracks">
         <li><a class="trk" href="#mainway" data-k="talks"><span class="n">1</span><span class="nm"><img src="/files/icon-mainway.svg" alt="">Mainway</span><canvas data-mini="talks"></canvas><span class="st">Live demo: call it in your browser<i class="ph ph-arrow-up-right"></i></span></a></li>
-        <li><a class="trk" href="#brisk" data-k="tidies"><span class="n">2</span><span class="nm"><img src="/files/icon-brisk.svg" alt="">brisk</span><canvas data-mini="tidies"></canvas><span class="st">Free on GitHub<i class="ph ph-arrow-up-right"></i></span></a></li>
-        <li><a class="trk" href="#siradaki" data-k="books"><span class="n">3</span><span class="nm"><img src="/files/icon-siradaki.svg" alt="">sıradaki</span><canvas data-mini="books"></canvas><span class="st">In development<i class="ph ph-arrow-up-right"></i></span></a></li>
-        <li><a class="trk" href="#redteam" data-k="breaks"><span class="n">4</span><span class="nm"><img src="/files/icon-redteam.svg" alt="">Red team agent</span><canvas data-mini="breaks"></canvas><span class="st">In development<i class="ph ph-arrow-up-right"></i></span></a></li>
+        <li><a class="trk" href="#redteam" data-k="breaks"><span class="n">2</span><span class="nm"><img src="/files/icon-gambit.svg" alt="">Gambit</span><canvas data-mini="breaks"></canvas><span class="st">In development<i class="ph ph-arrow-up-right"></i></span></a></li>
+        <li><a class="trk" href="#brisk" data-k="tidies"><span class="n">3</span><span class="nm"><img src="/files/icon-brisk.svg" alt="">brisk</span><canvas data-mini="tidies"></canvas><span class="st">Free on GitHub<i class="ph ph-arrow-up-right"></i></span></a></li>
+        <li><a class="trk" href="#siradaki" data-k="books"><span class="n">4</span><span class="nm"><img src="/files/icon-siradaki.svg" alt="">sıradaki</span><canvas data-mini="books"></canvas><span class="st">In development<i class="ph ph-arrow-up-right"></i></span></a></li>
       </ol>
     </div>
   </section>
@@ -510,10 +503,59 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
     </div>
   </section>
 
-  <!-- TRACK 2: BRISK -->
+  <!-- TRACK 2: GAMBIT -->
+  <section class="scene paper project" id="redteam" data-track="breaks">
+    <div class="wrap">
+      <p class="trackline rv"><canvas data-mini="breaks" data-small></canvas><b>Track 2</b>In development, private</p>
+      <h2 class="title rv"><img src="/files/icon-gambit.svg" alt="">Gambit</h2>
+      <p class="stand rv">An agent that hunts for security bugs in bug-bounty programmes, built so it can’t break the rules it’s given.</p>
+      <div class="story">
+        <div class="rv">
+          <div class="cols">
+            <p>It wraps the open-source Strix engine in a safety core of my own. Before any request leaves, a scope gate checks the target against the programme’s rules, and the sandbox can only reach hosts on an allowlist.</p>
+            <p>Findings come to me as drafts, and I decide what gets sent.</p>
+          </div>
+          <div class="stamp"><i class="ph ph-lock-simple" aria-hidden="true"></i><span><b>Private repo</b><small>Walkthrough on request</small></span></div>
+          <ul class="tags"><li>Python</li><li>Docker</li><li>WSL2</li><li>Strix</li></ul>
+        </div>
+        <blockquote class="pull rv" style="--c: var(--breaks)">Finding bugs is the easy part. Staying inside the rules while you look is the work.</blockquote>
+      </div>
+      <div class="media bento">
+        <figure class="shot lead rv"><img src="/files/gambit-hunt-7.webp" width="1320" height="1188" loading="lazy" decoding="async" alt="Gambit hunting its own test lab: the four agents as chess pieces, a log of their moves, the live requests with each verdict, four of its twelve proven findings as face-up cards, and a red lily in full bloom with three unproven cards held above it"><figcaption>A hunt, played as chess: the agents are the pieces, every request is logged, proven findings turn face up. Prototype, sample data.</figcaption></figure>
+        <figure class="shot rv"><img src="/files/gambit-board.webp" width="1320" height="898" loading="lazy" decoding="async" alt="The board: product areas such as Login, Bookings and Admin down the side, bug classes such as Access, XSS and Logic across the top, with ticks on clean squares, cards on suspects and findings, and two pieces on the square they are working"><figcaption>The board: every area against every bug class. Pieces stand on the squares they’re working.</figcaption></figure>
+        <figure class="shot rv"><img src="/files/gambit-owner-report.webp" width="1320" height="898" loading="lazy" decoding="async" alt="The owner's report: download as Markdown, PDF or ZIP, above an English security report for a test lab with five findings"><figcaption>The owner’s report: only findings a separate checker proved, with steps and evidence.</figcaption></figure>
+      </div>
+        <div class="finds rv">
+          <div class="note">
+            <p class="k">Found so far</p>
+            <p>Three reports, all confirmed and disclosed responsibly. One CVE is public; the LEANN details follow once those advisories are published.</p>
+          </div>
+          <div class="slips">
+            <article class="slip hi" style="--s: 8.8">
+              <p class="who">Confirmed by the maintainer</p>
+              <p class="score"><b>8.8</b><span>CVSS<br>High</span></p>
+              <div class="meter" aria-hidden="true"></div>
+              <h3>Two remote code execution bugs in LEANN</h3>
+              <p class="ctx">An open-source vector database with 13k stars on GitHub.</p>
+              <p class="ids"><span>2 GitHub advisories</span><span>CVE pending</span></p>
+            </article>
+            <article class="slip mid" style="--s: 5.3">
+              <p class="who">Validated by Patchstack</p>
+              <p class="score"><b>5.3</b><span>CVSS<br>Medium</span></p>
+              <div class="meter" aria-hidden="true"></div>
+              <h3>Broken access control in Supsystic Contact Form</h3>
+              <p class="ctx">A WordPress plugin. The bug needs no login.</p>
+              <p class="ids"><span><a href="https://www.cve.org/CVERecord?id=CVE-2026-115595" target="_blank" rel="noopener">CVE-2026-115595</a></span><span>OWASP A01</span></p>
+            </article>
+          </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- TRACK 3: BRISK -->
   <section class="scene paper project" id="brisk" data-track="tidies">
     <div class="wrap">
-      <p class="trackline rv"><canvas data-mini="tidies" data-small></canvas><b>Track 2</b>Out now, open source</p>
+      <p class="trackline rv"><canvas data-mini="tidies" data-small></canvas><b>Track 3</b>Out now, open source</p>
       <h2 class="title rv"><img src="/files/icon-brisk.svg" alt="">brisk</h2>
       <p class="stand rv">A free Windows cleaner that finds what slows your PC down, fixes it in one click, and refuses to claim anything it didn’t measure.</p>
       <div class="story">
@@ -536,10 +578,10 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
     </div>
   </section>
 
-  <!-- TRACK 3: SIRADAKI -->
+  <!-- TRACK 4: SIRADAKI -->
   <section class="scene paper project" id="siradaki" data-track="books">
     <div class="wrap">
-      <p class="trackline rv"><canvas data-mini="books" data-small></canvas><b>Track 3</b>In development, iOS and Android</p>
+      <p class="trackline rv"><canvas data-mini="books" data-small></canvas><b>Track 4</b>In development, iOS and Android</p>
       <h2 class="title rv"><img src="/files/icon-siradaki.svg" alt="">sıradaki</h2>
       <p class="stand rv">Booking for barbers, hairdressers, nail and massage salons in Turkey. You find a free slot today; the shop sees its whole day on one screen.</p>
       <div class="story">
@@ -593,63 +635,6 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
     </div>
   </section>
 
-  <!-- TRACK 4: RED TEAM -->
-  <section class="scene night project" id="redteam" data-track="breaks">
-    <div class="wrap">
-      <p class="trackline rv"><canvas data-mini="breaks" data-small></canvas><b>Track 4</b>In development, private</p>
-      <h2 class="title rv"><img src="/files/icon-redteam.svg" alt="">Red team agent</h2>
-      <p class="stand rv">An agent that hunts for security bugs in bug-bounty programmes, built so it can’t break the rules it’s given.</p>
-      <div class="story">
-        <div class="rv">
-          <div class="cols">
-            <p>It wraps the open-source Strix engine in a safety core of my own. Before any request leaves, a scope gate checks the target against the programme’s rules, and the sandbox can only reach hosts on an allowlist.</p>
-            <p>Findings come to me as drafts, and I decide what gets sent.</p>
-          </div>
-          <div class="stamp"><i class="ph ph-lock-simple" aria-hidden="true"></i><span><b>Private repo</b><small>Walkthrough on request</small></span></div>
-          <ul class="tags"><li>Python</li><li>Docker</li><li>WSL2</li><li>Strix</li></ul>
-        </div>
-        <blockquote class="pull rv" style="--c: var(--breaks)">Finding bugs is the easy part. Staying inside the rules while you look is the work.</blockquote>
-      </div>
-        <div class="finds rv">
-          <div class="note">
-            <p class="k">Found so far</p>
-            <p>Three reports, all confirmed and disclosed responsibly. One CVE is public; the LEANN details follow once those advisories are published.</p>
-          </div>
-          <div class="slips">
-            <article class="slip hi" style="--s: 8.8">
-              <p class="who">Confirmed by the maintainer</p>
-              <p class="score"><b>8.8</b><span>CVSS<br>High</span></p>
-              <div class="meter" aria-hidden="true"></div>
-              <h3>Two remote code execution bugs in LEANN</h3>
-              <p class="ctx">An open-source vector database with 13k stars on GitHub.</p>
-              <p class="ids"><span>2 GitHub advisories</span><span>CVE pending</span></p>
-            </article>
-            <article class="slip mid" style="--s: 5.3">
-              <p class="who">Validated by Patchstack</p>
-              <p class="score"><b>5.3</b><span>CVSS<br>Medium</span></p>
-              <div class="meter" aria-hidden="true"></div>
-              <h3>Broken access control in Supsystic Contact Form</h3>
-              <p class="ctx">A WordPress plugin. The bug needs no login.</p>
-              <p class="ids"><span><a href="https://www.cve.org/CVERecord?id=CVE-2026-115595" target="_blank" rel="noopener">CVE-2026-115595</a></span><span>OWASP A01</span></p>
-            </article>
-          </div>
-        </div>
-        <figure class="media flow rv">
-          <svg viewBox="0 0 640 300" role="img" aria-label="Every request passes a scope gate and an egress allowlist">
-            <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#ecebe8"/></marker></defs>
-            <rect class="box" x="10" y="118" width="120" height="64" rx="10"/><text x="70" y="146" text-anchor="middle">Agent</text><text class="small" x="70" y="166" text-anchor="middle">Strix engine</text>
-            <rect class="gate" x="200" y="104" width="140" height="92" rx="10"/><text x="270" y="140" text-anchor="middle">Scope gate</text><text class="small" x="270" y="162" text-anchor="middle">programme rules</text>
-            <rect class="gate" x="410" y="104" width="140" height="92" rx="10"/><text x="480" y="140" text-anchor="middle">Allowlist</text><text class="small" x="480" y="162" text-anchor="middle">sandbox network</text>
-            <line class="ok" x1="130" y1="150" x2="196" y2="150" stroke-width="1.6" marker-end="url(#ar)"/>
-            <line class="ok" x1="340" y1="150" x2="406" y2="150" stroke-width="1.6" marker-end="url(#ar)"/>
-            <line class="ok" x1="550" y1="150" x2="626" y2="150" stroke-width="1.6" marker-end="url(#ar)"/><text class="small" x="588" y="138" text-anchor="middle">target</text>
-            <path class="no" d="M270 104 V52 H340" fill="none" stroke-width="1.6"/><text class="notext" x="346" y="56">admin.example.com, out of scope</text>
-            <path class="no" d="M480 196 V250 H410" fill="none" stroke-width="1.6"/><text class="notext" x="404" y="254" text-anchor="end">169.254.169.254, not allowed</text>
-          </svg>
-        </figure>
-    </div>
-  </section>
-
   <!-- ABOUT -->
   <section class="scene paper about" id="about">
     <div class="wrap">
@@ -685,7 +670,7 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
 <script>
 (function () {
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var COL = { talks: '#9b7cff', tidies: '#2fc6dc', books: '#ff6a3d', breaks: '#ebc23a' };
+  var COL = { talks: '#9b7cff', tidies: '#2fc6dc', books: '#ebc23a', breaks: '#e5383b' };
   var root = document.documentElement;
 
   /* ---------- Mainway links: the live site, or the copy on :8093 while this page is served from this machine or the LAN ---------- */
@@ -724,7 +709,7 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
   function alpha(hex, a) { var n = parseInt(hex.slice(1), 16); return 'rgba(' + (n >> 16) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')'; }
 
   /* ---------- the sentence: a live waveform that keeps playing ---------- */
-  var words = [['I', .14, 1], ['build', .3, 1], ['software', .52, 3], ['that', .2, 1], ['talks', .44, 1, 'talks'], ['tidies', .5, 2, 'tidies'], ['books', .36, 1, 'books'], ['and', .2, 1], ['breaks in', .66, 2, 'breaks']];
+  var words = [['I', .14, 1], ['build', .3, 1], ['software', .52, 3], ['that', .2, 1], ['talks', .44, 1, 'talks'], ['breaks in', .66, 2, 'breaks'], ['tidies', .5, 2, 'tidies'], ['and', .2, 1], ['books', .36, 1, 'books']];
   var gaps = [.06, .05, .06, .14, .2, .2, .1, .07, 0];
   var dur = .12, spans = []; words.forEach(function (w, i) { spans.push([dur, dur + w[1], w]); dur += w[1] + gaps[i]; }); dur += .15;
   var focusK = null, activeK = null;
