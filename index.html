@@ -114,6 +114,7 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
 @media (min-width: 1000px) { .story { grid-template-columns: minmax(0, 2fr) minmax(0, 1.12fr); gap: 64px; } }
 .cols { columns: 2 280px; column-gap: 40px; font-size: 17px; line-height: 1.64; color: var(--fg-body); }
 .cols p { margin: 0 0 1em; }
+#redteam .cols p { break-inside: avoid; }
 .pull { margin: 0; padding-left: 26px; border-left: 2px solid var(--c, var(--fg-3)); font-weight: 400; font-style: italic; font-size: clamp(25px, 2vw, 36px); line-height: 1.2; letter-spacing: -.02em; }
 .tags { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 18px 0 0; padding: 0; list-style: none; }
 .tags li { font-size: 13.5px; font-weight: 500; color: var(--fg-3); }
@@ -508,17 +509,19 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
     <div class="wrap">
       <p class="trackline rv"><canvas data-mini="breaks" data-small></canvas><b>Track 2</b>In development, private</p>
       <h2 class="title rv"><img src="/files/icon-gambit.svg" alt="">Gambit</h2>
-      <p class="stand rv">An agent that hunts for security bugs in bug-bounty programmes, built so it can’t break the rules it’s given.</p>
+      <p class="stand rv">A team of AI agents that hunts for security bugs in bug-bounty programmes on its own: it maps the target, works through every kind of bug, and proves what it finds.</p>
       <div class="story">
         <div class="rv">
           <div class="cols">
-            <p>It wraps the open-source Strix engine in a safety core of my own. Before any request leaves, a scope gate checks the target against the programme’s rules, and the sandbox can only reach hosts on an allowlist.</p>
-            <p>Findings come to me as drafts, and I decide what gets sent.</p>
+            <p>Gambit plays each hunt like a game of chess. A chief plans the hunt and hands out the moves, hunters probe the target, and a judge re-runs every finding from a clean session. If it doesn’t reproduce, it doesn’t count.</p>
+            <p>The board maps every part of the target against every bug class, so it always knows what it has tried and what’s left. Every request is logged, so each finding comes with the exact request that proves it.</p>
+            <p>The score is a red spider lily, and every petal is a finding. A new one sprouts as a pale bud. If the judge proves it, the bud opens red; if not, it dries, crumbles to ash and falls. When a report is ready, the flower fills in and its tips catch fire.</p>
+            <p>It writes the report itself, with steps and evidence. Every report stops with me as a draft. Sending it is my call.</p>
           </div>
           <div class="stamp"><i class="ph ph-lock-simple" aria-hidden="true"></i><span><b>Private repo</b><small>Walkthrough on request</small></span></div>
-          <ul class="tags"><li>Python</li><li>Docker</li><li>WSL2</li><li>Strix</li></ul>
+          <ul class="tags"><li>Python</li><li>Docker</li><li>Claude Code</li></ul>
         </div>
-        <blockquote class="pull rv" style="--c: var(--breaks)">Finding bugs is the easy part. Staying inside the rules while you look is the work.</blockquote>
+        <blockquote class="pull rv" style="--c: var(--breaks)">It doesn’t report hunches. Every petal on that flower is a bug it proved.</blockquote>
       </div>
       <div class="media bento">
         <figure class="shot lead rv"><img src="/files/gambit-hunt-7.webp" width="1320" height="1188" loading="lazy" decoding="async" alt="Gambit hunting its own test lab: the four agents as chess pieces, a log of their moves, the live requests with each verdict, four of its twelve proven findings as face-up cards, and a red lily in full bloom with three unproven cards held above it"><figcaption>A hunt, played as chess: the agents are the pieces, every request is logged, proven findings turn face up. Prototype, sample data.</figcaption></figure>
