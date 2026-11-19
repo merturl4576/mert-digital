@@ -106,7 +106,7 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
 .paper + .paper, .night.project + .night.project { padding-top: 0; }
 .trackline { display: flex; align-items: center; gap: 14px; font-size: 14px; color: var(--fg-2); margin: 0 0 22px; }
 .trackline canvas { width: 72px; height: 20px; }
-.trackline b { color: var(--fg); font-weight: 600; }
+.trackline b { color: var(--fg); font-weight: 600; white-space: nowrap; flex-shrink: 0; }
 .title { display: flex; align-items: center; gap: 18px; margin: 0; font-weight: 600; font-size: clamp(40px, 3.6vw, 66px); line-height: .95; letter-spacing: -.04em; }
 .title img { width: clamp(44px, 3.2vw, 58px); height: clamp(44px, 3.2vw, 58px); border-radius: 24%; box-shadow: 0 12px 26px -14px var(--drop); }
 .stand { margin: 26px 0 0; font-weight: 400; font-size: clamp(20px, 1.4vw, 25px); line-height: 1.36; letter-spacing: -.012em; max-width: 620px; color: var(--fg); }
@@ -507,7 +507,7 @@ h1 { margin: 0; font-weight: 600; font-size: clamp(52px, 5.4vw, 92px); line-heig
   <!-- TRACK 2: GAMBIT -->
   <section class="scene paper project" id="redteam" data-track="breaks">
     <div class="wrap">
-      <p class="trackline rv"><canvas data-mini="breaks" data-small></canvas><b>Track 2</b>In development, private</p>
+      <p class="trackline rv"><canvas data-mini="breaks" data-small></canvas><b>Track 2</b>In use. Version 1.0 ships the day attackers retire.</p>
       <h2 class="title rv"><img src="/files/icon-gambit.svg" alt="">Gambit</h2>
       <p class="stand rv">A team of AI agents that hunts for security bugs in bug-bounty programmes on its own: it maps the target, works through every kind of bug, and proves what it finds.</p>
       <div class="story">
